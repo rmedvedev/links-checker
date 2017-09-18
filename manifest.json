@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "OMTA",
+  "version": "0.1",
+  "description": "Online manual test assistance",
+
+  "minimum_chrome_version": "10.0",
+  "devtools_page": "devtools.html",
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  }
+}
