@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html>
+
+<style type="text/css">
+    body {
+        min-width:300px;
+    }
+</style>
 <head>
-    <!-- <script src="jquery.js"></script> -->
-    <!-- <script src="popup.js"></script> -->
-    <title></title>
+    <title>test1</title>
 </head>
 <body>
-    <textarea id="input"></textarea><br>
-    <input id="btn_submit" type="submit"><br>
-    <div id="result"></div>
+<h1>Page params</h1>
+<!-- <br> -->
+<!-- <input type="text" id="text1"> -->
+<!-- <br> -->
+<input type="checkbox" id="https_check" >
+<label for="https_check">check https?</label>
+<p>Protocol: <b><span id="protocol_val"></span></b></p>
+<p id="urlparams"></p>
+<br>
+<br>
+<input type="button" id="getUrl" value="Get URL">
+
+<!-- <input type="text" id="getUrl" name="Get URL"> -->
 </body>
+<!--<script type="text/javascript" src="jquery-3.2.1.min.js"></script>-->
+<script type="text/javascript" src="popup.js"></script>
 </html>
