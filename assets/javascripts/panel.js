@@ -3,27 +3,22 @@ chrome.devtools.panels.create("OMTA",
     "panel.html",
     function (panel) {
         panel.onShown.addListener(function callback(window) {
-            chrome.runtime.sendMessage({ tabId: chrome.devtools.inspectedWindow.tabId },{},
-                function(results) {
-                    window.document.getElementById('links').innerHTML = 'Ссылок' + results.total;
+            var backgroundPageConnection = chrome.runtime.connect({
+                name: "panel"
+            });
 
-                    // if (!results.badlinks.length) {
-                    //
-                    // }
-                    // else {
-                    //     var details = auditResults.createResult(results.badlinks.length +
-                    //         " links out of " + results.total + " are broken");
-                    //     for (var i = 0; i < results.badlinks.length; ++i) {
-                    //         details.addChild(auditResults.createURL(results.badlinks[i].href,
-                    //             results.badlinks[i].text));
-                    //     }
-                    //     auditResults.addResult("Broken links found (" +
-                    //         results.badlinks.length +
-                    //         ")", "",
-                    //         auditResults.Severity.Severe,
-                    //         details);
-                    // }
-                });
+            backgroundPageConnection.postMessage({
+                name: 'init',
+                tabId: chrome.devtools.inspectedWindow.tabId
+            });
+
+            backgroundPageConnection.onMessage.addListener(function (message) {
+                window.document.getElementById('links').innerHTML = message.links.length;
+                window.document.getElementById('title').innerHTML = message.title;
+                window.document.getElementById('host').innerHTML = message.host;
+                window.document.getElementById('path').innerHTML = message.path;
+                window.document.getElementById('https').innerHTML = message.https ? 'Yes' : 'No';
+            });
         })
     }
 );

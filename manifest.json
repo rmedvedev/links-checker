@@ -19,8 +19,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-//    'experimental' requires the 'experimental-extension-apis' command line switch to be enabled.
-//    "experimental",
+    "experimental",
     "tabs",
     "http://*/*",
     "https://*/*",
