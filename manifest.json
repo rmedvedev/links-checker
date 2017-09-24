@@ -18,11 +18,18 @@
     "default_title": "Помощник тестировщика",
     "default_popup": "popup.html"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["assets/javascripts/content.js"]
+    }
+  ],
   "permissions": [
-    "experimental",
     "tabs",
+    "cookies",
     "http://*/*",
     "https://*/*",
+    "*://*/*",
     "notifications"
   ]
 }

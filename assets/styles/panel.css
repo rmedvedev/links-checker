@@ -1,0 +1,22 @@
+body {
+    font-family: monospace, serif;
+}
+
+summary {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.column1 {
+    float: left;
+    width: 50%;
+}
+
+.column2 {
+    float: left;
+    width: 50%;
+}
+
+details > details {
+    margin-left: 10px;
+}

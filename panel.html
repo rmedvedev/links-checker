@@ -1,35 +1,55 @@
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="assets/styles/panel.css">
 </head>
 <body>
+<div class="column1">
+    <details open="open">
+        <summary>Page info</summary>
+        <div>
+            <b>Title:</b>
+            <span id="title"></span>
+        </div>
 
-<div>
-    <b>Title:</b>
-    <span id="title"></span>
+        <div>
+            <b>Https:</b>
+            <span id="https"></span>
+        </div>
+
+        <div>
+            <b>Host:</b>
+            <span id="host"></span>
+        </div>
+
+        <div>
+            <b>Path:</b>
+            <span id="path"></span>
+        </div>
+
+        <div>
+            <b>Query string:</b>
+            <span id="query_string"></span>
+        </div>
+    </details>
+
+    <details id="links">
+        <summary>Links: <span id="links_count"></span></summary>
+    </details>
+
+    <details>
+        <summary>Cookies: <span id="cookies_count"></span></summary>
+        <span id="cookies"></span>
+    </details>
+
+    <details>
+        <summary>Meta tags</summary>
+        <span id="meta_tags"></span>
+    </details>
+
 </div>
+<div class="column2">
 
-<div>
-    <b>Https:</b>
-    <span id="https"></span>
-</div>
-
-<div>
-    <b>Host:</b>
-    <span id="host"></span>
-</div>
-
-<div>
-    <b>Path:</b>
-    <span id="path"></span>
-</div>
-
-<div>
-    <b>Links:</b>
-    <span id="links"></span>
-    <span class="text-success" id="links-success"></span>
-    <span class="text-warning" id="links-redirect"></span>
-    <span class="text-danger" id="links-failed"></span>
 </div>
 </body>
 </html>
