@@ -24,6 +24,7 @@
       "js": ["assets/javascripts/content.js"]
     }
   ],
+  "options_page": "options.html",
   "permissions": [
     "tabs",
     "cookies",
