@@ -47,6 +47,7 @@
                     detailsElement.appendChild(linkElement);
                 }
 
+
                 let backgroundPageConnection = chrome.runtime.connect({
                     name: "panel"
                 });
@@ -55,6 +56,14 @@
                     name: 'init',
                     tabId: chrome.devtools.inspectedWindow.tabId
                 });
+
+                window.document.getElementById('scan').addEventListener('click', function(){
+                    backgroundPageConnection.postMessage({
+                        name: 'checkLinks',
+                        tabId: chrome.devtools.inspectedWindow.tabId
+                    });
+                });
+
 
                 backgroundPageConnection.onMessage.addListener(function (message) {
                     switch (message.name) {

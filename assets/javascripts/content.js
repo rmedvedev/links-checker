@@ -42,8 +42,18 @@
         return metaTags;
     };
 
+    let checkLinks = function () {
+        let links = document.querySelectorAll("a");
+
+        //remove styles
+        links.forEach(function (link) {
+            link.classList.remove('checker-link', 'checker-success', 'checker-error');
+        });
+    };
+
     let init = function () {
         chrome.runtime.sendMessage({
+            name: 'pageInfo',
             pageInfo: getPageInfo(),
             links: getLinks(),
             cookies: getCookies(),
@@ -51,12 +61,79 @@
         });
     };
 
-    document.onreadystatechange = function () {
-        if (document.readyState === "interactive") {
-            init();
+    chrome.runtime.onMessage.addListener(function (message) {
+        new ContentMessageHandler(message);
+    });
+
+
+    function Links() {
+        let links = document.querySelectorAll("a");
+        let checkerIndex = null;
+
+        this.getLinks = function () {
+            return links;
+        };
+
+        this.clearStyles = function () {
+            links.forEach(function (link) {
+                link.classList.remove('checker-link', 'checker-success', 'checker-error');
+                link.classList.add('checker-link');
+            });
+        };
+
+        this.checkLinks = function (restart = false) {
+            if (restart) {
+                checkerIndex = 0;
+            }
+
+            let link = links[checkerIndex];
+            if (link) {
+                chrome.runtime.sendMessage({
+                    name: 'checkLink',
+                    link: link.href,
+                    index: checkerIndex,
+                });
+                checkerIndex++;
+            }
+        };
+
+        this.checkLinksCallback = function (message) {
+            if(checkerIndex !== null) {
+                let css = 'checker-error', color = 'red';
+                if (message.status >= 200 && message.status < 300) {
+                    css = 'checker-success';
+                    color = '';
+                }
+
+                console.log("%c" + links[message.index].href + ' - ' + message.status, 'color:' + color);
+
+                links[message.index].classList.add(css);
+                this.checkLinks();
+            }
         }
-    };
+    }
+
+    let links = new Links();
+
+    function ContentMessageHandler(message) {
+        switch (message.name) {
+            case 'checkLinks':
+                //remove styles
+                links.clearStyles();
+                links.checkLinks(true);
+                console.log('Restart scanning links.');
+                break;
+            case 'checkingLinksCallback':
+                links.checkLinksCallback(message);
+                break;
+            case 'init':
+                init();
+                break;
+
+        }
+    }
 
     init();
-
 })();
+
+
