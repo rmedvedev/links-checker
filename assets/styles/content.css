@@ -1,0 +1,11 @@
+.checker-link {
+    background-color: dodgerblue !important;
+}
+
+.checker-success{
+    background-color: green !important;
+}
+
+.checker-error{
+    background-color: darkred !important;
+}

@@ -10,7 +10,8 @@
   "devtools_page": "devtools.html",
   "background": {
     "scripts": [
-      "assets/javascripts/background.js"
+      "assets/javascripts/background.js",
+      "assets/javascripts/check.js"
     ],
     "persistent": false
   },
@@ -21,7 +22,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["assets/javascripts/content.js"]
+      "js": ["assets/javascripts/content.js"],
+      "css": ["assets/styles/content.css"]
     }
   ],
   "options_page": "options.html",
