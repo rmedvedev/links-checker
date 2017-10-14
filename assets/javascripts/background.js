@@ -49,11 +49,19 @@
                 }
                 break;
             case 'checkLink':
-                LinksChecker.checkOne(message.link, function (http_status) {
+                LinksChecker.checkOne(message.link, function (httpStatus, requestTime) {
                     chrome.tabs.sendMessage(sender.tab.id, {
                         name: 'checkingLinksCallback',
-                        status: http_status,
-                        index: message.index
+                        status: httpStatus,
+                        requestTime: requestTime,
+                        index: message.index,
+                    });
+
+                    connections[sender.tab.id].postMessage({
+                        name: 'checkedLink',
+                        url: message.link,
+                        requestTime: requestTime,
+                        status: httpStatus,
                     });
                 });
                 break;
