@@ -2,10 +2,35 @@
     background-color: dodgerblue !important;
 }
 
-.checker-success{
+.checker-success {
     background-color: green !important;
 }
 
-.checker-error{
+.checker-error {
     background-color: darkred !important;
+}
+
+.checker-progress {
+    animation: colorchange 0.5s infinite; /* animation-name followed by duration in seconds*/
+    /* you could also use milliseconds (ms) or something like 2.5s */
+    -webkit-animation: colorchange 0.5s infinite; /* Chrome and Safari */
+}
+
+@keyframes colorchange {
+    0% {
+        background: dodgerblue;
+    }
+    50% {
+        background: yellow;
+    }
+}
+
+@-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+{
+    0% {
+        background: yellow;
+    }
+    50% {
+        background: dodgerblue;
+    }
 }
