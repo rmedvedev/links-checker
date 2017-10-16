@@ -48,9 +48,15 @@
 <div class="column2">
     <button id="scan">Scan</button>
     <button id="rescan">Rescan</button>
+    <span>Full time for page testing: </span><b><span id="full_time">12000 ms</span></b>
+    <input type="checkbox" id="session"> save url in session storage<br>
     <details id="links">
-        <summary>Links: <span id="links_count"></span></summary>
+        <summary>Links: <span id="links_count"></span><span id="all_links_count"></span></summary>
     </details>
+    <details id="session_saved_links">
+        <summary>Saved links: <span id="session_saved_links_count">0</span></summary>
+    </details>
+
 </div>
 </body>
 </html>
