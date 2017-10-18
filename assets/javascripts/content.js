@@ -53,7 +53,7 @@
     };
 
     chrome.runtime.onMessage.addListener(function (message) {
-        new ContentMessageHandler(message);
+        ContentMessageHandler(message);
     });
 
 
@@ -71,6 +71,10 @@
                 link.classList.add('checker-link');
             });
         };
+
+        this.stopCheckLinks = function(){
+            checkerIndex = null;
+        }
 
         this.checkLinks = function (restart = false) {
             if (restart) {
@@ -121,8 +125,10 @@
             case 'checkingLinksCallback':
                 links.checkLinksCallback(message);
                 break;
+            case 'stopCheckLinks':
+                links.stopCheckLinks();
+                break;
             case 'init':
-                console.log(1);
                 init();
                 break;
         }
@@ -130,5 +136,3 @@
 
     init();
 })();
-
-

@@ -38,6 +38,13 @@
             clearLinksBlock();
         });
 
+        window.document.getElementById('stop').addEventListener('click', function () {
+            backgroundConnection.postMessage({
+                name: 'stopCheckLinks',
+                tabId: _tabId
+            });
+        });
+
         function clearLinksBlock(){
             //init
             let detailsElements = linksDOM.getElementsByTagName('details');
@@ -103,7 +110,3 @@ function BackgroundConnection() {
         _connection.onMessage.addListener(callback);
     }
 }
-
-
-
-

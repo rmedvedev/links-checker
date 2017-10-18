@@ -11,6 +11,9 @@
                 case 'checkLinks':
                     chrome.tabs.sendMessage(message.tabId, {name: 'checkLinks'});
                     break;
+                case 'stopCheckLinks':
+                    chrome.tabs.sendMessage(message.tabId, {name: 'stopCheckLinks'});
+                    break;
             }
         };
 
