@@ -6,19 +6,40 @@
 <body>
 <h2>File settings:</h2>
 <!--File settings:-->
-<input type="file" id="myfile" accept="application/json" />
+<input type="file" id="myfile" accept="application/json"/>
 
 <h2>Choose status for log:</h2>
-<input type=checkbox id="status100" name="101" value="102" title="don't show 1XX status in log" checked><b>HTTP status codes 1XX</b><br>
-<input type=checkbox id="status200" name="101" value="102" title="don't show 2XX status in log"><b>HTTP status codes 2XX</b><br>
-<input type=checkbox id="status300" name="101" value="102" title="don't show 3XX status in log" checked><b>HTTP status codes 3XX</b><br>
-<input type=checkbox id="status400" name="101" value="102" title="don't show 4XX status in log" checked><b>HTTP status codes 4XX</b><br>
-<input type=checkbox id="status500" name="101" value="102" title="don't show 5XX status in log" checked><b>HTTP status codes 5XX</b><br>
+<input type=checkbox id="status100" name="101" value="102" title="don't show 1XX status in log" checked><b>HTTP status
+    codes 1XX</b><br>
+<input type=checkbox id="status200" name="101" value="102" title="don't show 2XX status in log"><b>HTTP status codes
+    2XX</b><br>
+<input type=checkbox id="status300" name="101" value="102" title="don't show 3XX status in log" checked><b>HTTP status
+    codes 3XX</b><br>
+<input type=checkbox id="status400" name="101" value="102" title="don't show 4XX status in log" checked><b>HTTP status
+    codes 4XX</b><br>
+<input type=checkbox id="status500" name="101" value="102" title="don't show 5XX status in log" checked><b>HTTP status
+    codes 5XX</b><br>
 
-<h2>Set timeout:</h2>
-<input type=number id="max_timeout" title="set max time for waiting response (milliseconds)" value="10000"/>
+<h3>Links checker settings</h3>
+<hr/>
+<div>
+    <label>
+        Links checker timeout, ms
+        <input type="text" id="links_checker_timeout">
+    </label>
+</div>
 
+<div>
+    <label>
+        Links checker blacklist
+        <div><textarea name="" id="links_checker_black_list" cols="30" rows="10"></textarea></div>
+    </label>
+</div>
 
+<hr/>
+<div><button id="save">Save</button></div>
+
+<script src="assets/javascripts/common/optionsHelper.js"></script>
 <script src="assets/javascripts/options.js"></script>
 </body>
 </html>

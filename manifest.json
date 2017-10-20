@@ -10,8 +10,9 @@
   "devtools_page": "devtools.html",
   "background": {
     "scripts": [
-      "assets/javascripts/background.js",
-      "assets/javascripts/check.js"
+      "assets/javascripts/common/optionsHelper.js",
+      "assets/javascripts/check.js",
+      "assets/javascripts/background.js"
     ],
     "persistent": false
   },
@@ -21,15 +22,29 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["assets/javascripts/content.js"],
-      "css": ["assets/styles/content.css"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "assets/javascripts/common/optionsHelper.js",
+        "assets/javascripts/content/links.js",
+        "assets/javascripts/content/pageHelper.js",
+        "assets/javascripts/content.js"
+      ],
+      "css": [
+        "assets/styles/content.css"
+      ]
     }
   ],
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
   "permissions": [
     "tabs",
     "cookies",
+    "storage",
     "http://*/*",
     "https://*/*",
     "*://*/*",
