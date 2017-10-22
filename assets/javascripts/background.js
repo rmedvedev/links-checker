@@ -1,5 +1,6 @@
 (function () {
     let connections = {};
+    let linksChecker = new LinksChecker();
 
     chrome.runtime.onConnect.addListener(function (port) {
         let extensionListener = function (message, sender, sendResponse) {
@@ -9,10 +10,9 @@
                     chrome.tabs.sendMessage(message.tabId, {name: 'init'});
                     break;
                 case 'checkLinks':
-                    chrome.tabs.sendMessage(message.tabId, {name: 'checkLinks'});
-                    break;
                 case 'stopCheckLinks':
-                    chrome.tabs.sendMessage(message.tabId, {name: 'stopCheckLinks'});
+                case 'rescanTimeoutLinks':
+                    chrome.tabs.sendMessage(message.tabId, {name: message.name});
                     break;
             }
         };
@@ -52,7 +52,7 @@
                 }
                 break;
             case 'checkLink':
-                LinksChecker.checkOne(message.link, function (httpStatus, requestTime) {
+                linksChecker.checkOne(message.link, function (httpStatus, requestTime) {
                     chrome.tabs.sendMessage(sender.tab.id, {
                         name: 'checkingLinksCallback',
                         status: httpStatus,
