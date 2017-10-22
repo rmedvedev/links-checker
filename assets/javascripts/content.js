@@ -30,6 +30,9 @@
             case 'stopCheckLinks':
                 links.stopCheckLinks();
                 break;
+            case 'rescanTimeoutLinks':
+                links.rescanTimeoutLinks();
+                break;
             case 'init':
                 init();
                 break;

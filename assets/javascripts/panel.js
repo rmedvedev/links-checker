@@ -45,7 +45,16 @@
             });
         });
 
-        function clearLinksBlock(){
+        window.document.getElementById('rescan').addEventListener('click', function () {
+            backgroundConnection.postMessage({
+                name: 'rescanTimeoutLinks',
+                tabId: _tabId
+            });
+            linksDOM.removeChild(window.document.getElementById('links0'));
+            linksDOM.removeChild(window.document.getElementById('links504'));
+        });
+
+        function clearLinksBlock() {
             //init
             let detailsElements = linksDOM.getElementsByTagName('details');
             if (detailsElements.length > 0) {
@@ -102,11 +111,11 @@ function BackgroundConnection() {
         name: "panel"
     });
 
-    this.postMessage = function(message){
+    this.postMessage = function (message) {
         _connection.postMessage(message)
     };
 
-    this.addMessageListener = function(callback){
+    this.addMessageListener = function (callback) {
         _connection.onMessage.addListener(callback);
     }
 }

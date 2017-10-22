@@ -10,10 +10,9 @@
                     chrome.tabs.sendMessage(message.tabId, {name: 'init'});
                     break;
                 case 'checkLinks':
-                    chrome.tabs.sendMessage(message.tabId, {name: 'checkLinks'});
-                    break;
                 case 'stopCheckLinks':
-                    chrome.tabs.sendMessage(message.tabId, {name: 'stopCheckLinks'});
+                case 'rescanTimeoutLinks':
+                    chrome.tabs.sendMessage(message.tabId, {name: message.name});
                     break;
             }
         };
