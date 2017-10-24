@@ -2,11 +2,28 @@
     let _tabId = chrome.devtools.inspectedWindow.tabId;
     let _panel;
 
+    let all_links_count = 0;
+    let links = {
+        success: 0,
+        warning: 0,
+        error: 0,
+    };
+
     function init(window) {
+        setInterval(getSessionLinksCount, 1000);
+
         _panel.onShown.removeListener(init);
         let linksDOM = window.document.getElementById('links');
 
-        function addLinkToPanel(url, status) {
+        function addLink(url, status) {
+            if(status > 200 && status < 300){
+                links.success++;
+            } else if(status < 400){
+                links.warning++;
+            } else {
+                links.error++;
+            }
+            renderLinksProgressBar();
             let detailsElement = window.document.getElementById('links' + status);
             if (detailsElement === null) {
                 detailsElement = window.document.createElement('details');
@@ -20,6 +37,10 @@
             let linkElement = window.document.createElement('div');
             linkElement.innerHTML = url;
             detailsElement.appendChild(linkElement);
+        }
+
+        function renderLinksProgressBar(){
+            window.document.getElementById('links_checker_progressbar_success').style = 'width:' + links.success / all_links_count * 100 + '%';
         }
 
         let backgroundConnection = new BackgroundConnection();
@@ -54,6 +75,20 @@
             linksDOM.removeChild(window.document.getElementById('links504'));
         });
 
+        window.document.getElementById('start_session').addEventListener('click', function () {
+            backgroundConnection.postMessage({
+                name: 'startSession',
+                tabId: _tabId
+            });
+        });
+
+        window.document.getElementById('stop_session').addEventListener('click', function () {
+            backgroundConnection.postMessage({
+                name: 'stopSession',
+                tabId: _tabId
+            });
+        });
+
         function clearLinksBlock() {
             //init
             let detailsElements = linksDOM.getElementsByTagName('details');
@@ -64,16 +99,24 @@
             }
         }
 
+        function getSessionLinksCount() {
+            backgroundConnection.postMessage({
+                name: 'getSessionLinksCount',
+                tabId: _tabId
+            });
+        }
+
         backgroundConnection.addMessageListener(function (message) {
             switch (message.name) {
                 case 'fromContent':
+                    all_links_count = message.links.length;
                     window.document.getElementById('links_count').innerHTML = message.links.length;
                     window.document.getElementById('title').innerHTML = message.pageInfo.title;
                     window.document.getElementById('host').innerHTML = message.pageInfo.host;
                     window.document.getElementById('path').innerHTML = message.pageInfo.path;
                     window.document.getElementById('query_string').innerHTML = message.pageInfo.query_string;
                     window.document.getElementById('https').innerHTML = message.pageInfo.https ? 'Yes' : 'No';
-                    window.document.getElementById('cookies_count').innerHTML = message.cookies.length;
+                    // window.document.getElementById('cookies_count').innerHTML = message.cookies.length;
                     window.document.getElementById('cookies').innerHTML = '';
                     message.cookies.forEach(function (cookie) {
                         window.document.getElementById('cookies').innerHTML += '<div><strong>' + cookie.name + ':</strong> ' + cookie.value + '</div>';
@@ -87,11 +130,12 @@
                     clearLinksBlock();
                     break;
                 case 'checkedLink':
-                    addLinkToPanel(message.url, message.status);
+                    addLink(message.url, message.status);
                     break;
-
+                case 'getSessionLinksCount':
+                    window.document.getElementById('session_saved_links_count').innerHTML = message.count;
+                    break;
             }
-
         });
     }
 

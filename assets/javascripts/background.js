@@ -2,6 +2,9 @@
     let connections = {};
     let linksChecker = new LinksChecker();
 
+    let enableSession = false;
+    let sessionLinks = [];
+
     chrome.runtime.onConnect.addListener(function (port) {
         let extensionListener = function (message, sender, sendResponse) {
             switch (message.name) {
@@ -14,6 +17,20 @@
                 case 'rescanTimeoutLinks':
                     chrome.tabs.sendMessage(message.tabId, {name: message.name});
                     break;
+                case 'startSession':
+                    enableSession = true;
+                    break;
+                case 'stopSession':
+                    enableSession = false;
+                    sessionLinks = [];
+                    break;
+                case 'getSessionLinksCount':
+                    connections[message.tabId].postMessage({
+                        name: 'getSessionLinksCount',
+                        count: Object.keys(sessionLinks).length,
+                    });
+                    break;
+
             }
         };
 
@@ -52,21 +69,35 @@
                 }
                 break;
             case 'checkLink':
-                linksChecker.checkOne(message.link, function (httpStatus, requestTime) {
-                    chrome.tabs.sendMessage(sender.tab.id, {
-                        name: 'checkingLinksCallback',
-                        status: httpStatus,
-                        requestTime: requestTime,
-                        index: message.index,
-                    });
+                let resultLink = sessionLinks[message.link];
+                if (enableSession && resultLink && resultLink.httpStatus >= 200 && resultLink.httpStatus < 400) {
+                    resultCallback(resultLink.requestTime, resultLink.httpStatus);
+                } else {
+                    linksChecker.checkOne(message.link, function (httpStatus, requestTime) {
+                        if (enableSession) {
+                            sessionLinks[message.link] = {requestTime: requestTime, httpStatus: httpStatus};
+                        }
 
-                    connections[sender.tab.id].postMessage({
-                        name: 'checkedLink',
-                        url: message.link,
-                        requestTime: requestTime,
-                        status: httpStatus,
+                        resultCallback(requestTime, httpStatus);
                     });
+                }
+
+            function resultCallback(requestTime, httpStatus) {
+                chrome.tabs.sendMessage(sender.tab.id, {
+                    name: 'checkingLinksCallback',
+                    status: httpStatus,
+                    requestTime: requestTime,
+                    index: message.index,
                 });
+
+                connections[sender.tab.id].postMessage({
+                    name: 'checkedLink',
+                    url: message.link,
+                    requestTime: requestTime,
+                    status: httpStatus,
+                });
+            }
+
                 break;
         }
 

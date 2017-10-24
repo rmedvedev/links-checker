@@ -7,14 +7,9 @@ summary {
     font-weight: bold;
 }
 
-.column1 {
+.column {
     float: left;
-    width: 50%;
-}
-
-.column2 {
-    float: left;
-    width: 50%;
+    width: 30%;
 }
 
 details > details {

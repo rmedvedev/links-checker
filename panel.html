@@ -2,62 +2,126 @@
 <html>
 <head>
     <link rel="stylesheet" href="assets/styles/panel.css">
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="column1">
-    <details open="open">
-        <summary>Page info</summary>
-        <div>
-            <b>Title:</b>
-            <span id="title"></span>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading" role="tab" id="pageInfo">
+                    <h5 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#pageInfoPanel" aria-expanded="true"
+                           aria-controls="pageInfoPanel">
+                            Page info
+                        </a>
+                    </h5>
+                </div>
+                <div id="pageInfoPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pageInfo">
+                    <div class="panel-body">
+                        <div>
+                            <b>Title:</b>
+                            <span id="title"></span>
+                        </div>
+
+                        <div>
+                            <b>Https:</b>
+                            <span id="https"></span>
+                        </div>
+
+                        <div>
+                            <b>Host:</b>
+                            <span id="host"></span>
+                        </div>
+
+                        <div>
+                            <b>Path:</b>
+                            <span id="path"></span>
+                        </div>
+
+                        <div>
+                            <b>Query string:</b>
+                            <span id="query_string"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" role="tab" id="cookiesInfo">
+                    <h5 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#cookiesPanel" aria-expanded="false"
+                           aria-controls="cookiesPanel">
+                            Cookies
+                        </a>
+                    </h5>
+                </div>
+                <div id="cookiesPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cookiesInfo">
+                    <div class="panel-body">
+                        <span id="cookies" style="overflow-wrap:break-word;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" role="tab" id="metaTags">
+                    <h5 class="panel-title">
+                        <a role="button" data-toggle="collapse" href="#metatagsPanel" aria-expanded="false"
+                           aria-controls="metatagsPanel">
+                            Meta tags
+                        </a>
+                    </h5>
+                </div>
+                <div id="metatagsPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="metaTags">
+                    <div class="panel-body">
+                        <span id="meta_tags"></span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div>
-            <b>Https:</b>
-            <span id="https"></span>
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Links checker</div>
+                <div class="panel-body">
+                    <button id="scan" class="btn btn-success">Scan</button>
+                    <button id="stop" class="btn btn-danger">Stop</button>
+                    <button id="rescan" class="btn btn-primary">Rescan</button>
+                    <button id="start_session" class="btn btn-success">Start session</button>
+                    <button id="stop_session" class="btn btn-danger">Stop session</button>
+                    <!--<span>Full time for page testing: </span><b><span id="full_time">12000 ms</span></b>-->
+                    <!--<input type="checkbox" id="session"> save url in session storage<br>-->
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" id="links_checker_progressbar_success" style="width: 0;">
+                            <span class="sr-only">35% Complete (success)</span>
+                        </div>
+                        <div class="progress-bar progress-bar-warning" style="width: 0;">
+                            <span class="sr-only">20% Complete (warning)</span>
+                        </div>
+                        <div class="progress-bar progress-bar-danger" style="width: 0;">
+                            <span class="sr-only">10% Complete (danger)</span>
+                        </div>
+                    </div>
+                    <details id="links">
+                        <summary>Links: <span id="links_count"></span><span id="all_links_count"></span></summary>
+                    </details>
+                    <div>
+                        <strong>Session saved links: </strong>
+                        <span id="session_saved_links_count"></span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div>
-            <b>Host:</b>
-            <span id="host"></span>
+        <div class="col-xs-3">
+
         </div>
 
-        <div>
-            <b>Path:</b>
-            <span id="path"></span>
-        </div>
-
-        <div>
-            <b>Query string:</b>
-            <span id="query_string"></span>
-        </div>
-    </details>
-
-
-    <details>
-        <summary>Cookies: <span id="cookies_count"></span></summary>
-        <span id="cookies"></span>
-    </details>
-
-    <details>
-        <summary>Meta tags</summary>
-        <span id="meta_tags"></span>
-    </details>
-
+    </div>
 </div>
-<div class="column2">
-    <button id="scan">Scan</button>
-    <button id="stop">Stop</button>
-    <button id="rescan">Rescan</button>
-    <span>Full time for page testing: </span><b><span id="full_time">12000 ms</span></b>
-    <input type="checkbox" id="session"> save url in session storage<br>
-    <details id="links">
-        <summary>Links: <span id="links_count"></span><span id="all_links_count"></span></summary>
-    </details>
-    <details id="session_saved_links">
-        <summary>Saved links: <span id="session_saved_links_count">0</span></summary>
-    </details>
 
-</div>
 </body>
 </html>
