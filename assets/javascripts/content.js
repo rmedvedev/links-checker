@@ -22,7 +22,7 @@
                 //remove styles
                 links.clearStyles();
                 links.checkLinks(true);
-                console.log('Restart scanning links.');
+                console.log('Start checking links.');
                 break;
             case 'checkingLinksCallback':
                 links.checkLinksCallback(message);

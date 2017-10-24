@@ -36,11 +36,15 @@ function Links() {
 
     this.stopCheckLinks = function () {
         checkerIndex = null;
+        console.log('Stop checking links.');
     };
 
     this.checkLinks = function (restart = false) {
         if (restart) {
             checkerIndex = 0;
+            links.map(function (link) {
+                link.status = null;
+            });
         }
 
         let link = links[checkerIndex];
@@ -59,10 +63,6 @@ function Links() {
 
     this.checkLinksCallback = function (message) {
         if (checkerIndex !== null) {
-            if (links[message.index].status === null) {
-                this.checkLinks();
-            }
-
             let css = 'checker-error', color = 'red';
             if (message.status >= 200 && message.status < 300) {
                 css = 'checker-success';
@@ -70,13 +70,19 @@ function Links() {
             }
             links[message.index].domNode.classList.remove('checker-success', 'checker-error', 'checker-progress');
             links[message.index].domNode.classList.add(css);
-            links[message.index].status = message.status;
 
             console.log("%c" + links[message.index].domNode.href + ' - ' + message.status + ' ' + message.requestTime + 'ms', 'color:' + color);
+
+            if (links[message.index].status === null) {
+                this.checkLinks();
+            }
+
+            links[message.index].status = message.status;
         }
     };
 
     this.rescanTimeoutLinks = function () {
+        console.log('Rechecking timeout links.');
         for (let key in links) {
             if (links[key].status === 0 || links[key].status === 504) {
                 checkerIndex = 0;
