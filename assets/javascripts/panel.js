@@ -16,13 +16,14 @@
         let linksDOM = window.document.getElementById('links');
 
         function addLink(url, status) {
-            if(status > 200 && status < 300){
+            if (status >= 200 && status < 300) {
                 links.success++;
-            } else if(status < 400){
+            } else if (status < 400 && status !== 0) {
                 links.warning++;
             } else {
                 links.error++;
             }
+
             renderLinksProgressBar();
             let detailsElement = window.document.getElementById('links' + status);
             if (detailsElement === null) {
@@ -39,8 +40,19 @@
             detailsElement.appendChild(linkElement);
         }
 
-        function renderLinksProgressBar(){
-            window.document.getElementById('links_checker_progressbar_success').style = 'width:' + links.success / all_links_count * 100 + '%';
+        function renderLinksProgressBar() {
+            let percentSuccess = Math.round(links.success / all_links_count * 100) + '%';
+            let percentWarning = Math.round(links.warning / all_links_count * 100) + '%';
+            let percentError = Math.round(links.error / all_links_count * 100) + '%';
+
+            window.document.getElementById('links_checker_progressbar_success').style.width = percentSuccess;
+            window.document.getElementById('links_checker_progressbar_success').innerHTML = percentSuccess;
+
+            window.document.getElementById('links_checker_progressbar_warning').style.width = percentWarning;
+            window.document.getElementById('links_checker_progressbar_warning').innerHTML = percentWarning;
+
+            window.document.getElementById('links_checker_progressbar_danger').style.width = percentError;
+            window.document.getElementById('links_checker_progressbar_danger').innerHTML = percentError;
         }
 
         let backgroundConnection = new BackgroundConnection();
@@ -57,6 +69,12 @@
             });
 
             clearLinksBlock();
+            links = {
+                success: 0,
+                warning: 0,
+                error: 0,
+            };
+            renderLinksProgressBar();
         });
 
         window.document.getElementById('stop').addEventListener('click', function () {
@@ -127,6 +145,12 @@
                         window.document.getElementById('meta_tags').innerHTML += '<div>' + metaTag + '</div>';
                     });
 
+                    links = {
+                        success: 0,
+                        warning: 0,
+                        error: 0,
+                    };
+                    renderLinksProgressBar();
                     clearLinksBlock();
                     break;
                 case 'checkedLink':

@@ -15,3 +15,7 @@ summary {
 details > details {
     margin-left: 10px;
 }
+
+.margin-top {
+    margin-top: 5px;
+}
