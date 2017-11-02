@@ -4,15 +4,11 @@ function OptionsHelper(){
             'links_checker_timeout': 30 * 1000,
         };
 
-    this.get = function(){
-        return new Promise(function(resolve){
-            chrome.storage.sync.get(defaults, resolve);
-        });
+    this.get = function(callback){
+        chrome.storage.sync.get(defaults, callback);
     };
     
     this.set = function (options) {
-        return new Promise(function(resolve){
-            chrome.storage.sync.set(options, resolve);
-        });
+        chrome.storage.sync.set(options);
     }
 }
