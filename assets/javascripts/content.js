@@ -1,27 +1,22 @@
-(function () {
+import {default as LinksCheckerModule} from './modules/LinksChecker/ContentModule.js'
+import {default as PageInfoModule} from './modules/PageInfo/ContentModule'
 
-    let linksModule = new Links();
-    let pageHelper = new PageHelper();
+(function () {
+    let linksCheckerModule = new LinksCheckerModule();
+    let pageInfoModule = new PageInfoModule();
 
     let init = function () {
-        chrome.runtime.sendMessage({
-            name: 'pageInfo',
-            pageInfo: pageHelper.getInfo(),
-            links: Array.from(linksModule.getLinks()).map(function(link){
-                return link.href;
-            }),
-            cookies: pageHelper.getCookies(),
-            metaTags: pageHelper.getMetaTags(),
-        });
+        pageInfoModule.handle({name: 'getPageInfo'});
     };
 
     chrome.runtime.onMessage.addListener(function (message) {
-        linksModule.handle(message.name);
         switch (message.name) {
             case 'init':
                 init();
                 break;
         }
+        linksCheckerModule.handle(message);
+        pageInfoModule.handle(message);
     });
 
     //when script load - send info to background

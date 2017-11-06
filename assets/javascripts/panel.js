@@ -127,8 +127,8 @@
         backgroundConnection.addMessageListener(function (message) {
             switch (message.name) {
                 case 'fromContent':
-                    all_links_count = message.links.length;
-                    window.document.getElementById('links_count').innerHTML = message.links.length;
+                    // all_links_count = message.links.length;
+                    // window.document.getElementById('links_count').innerHTML = message.links.length;
                     window.document.getElementById('title').innerHTML = message.pageInfo.title;
                     window.document.getElementById('host').innerHTML = message.pageInfo.host;
                     window.document.getElementById('path').innerHTML = message.pageInfo.path;

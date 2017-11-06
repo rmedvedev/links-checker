@@ -6,14 +6,9 @@ module.exports = {
             './assets/javascripts/panel.js'
         ],
         background: [
-            './assets/javascripts/common/optionsHelper.js',
-            './assets/javascripts/check.js',
             './assets/javascripts/background.js',
         ],
         content: [
-            "./assets/javascripts/common/optionsHelper.js",
-            "./assets/javascripts/content/links.js",
-            "./assets/javascripts/content/pageHelper.js",
             "./assets/javascripts/content.js"
         ],
     },
