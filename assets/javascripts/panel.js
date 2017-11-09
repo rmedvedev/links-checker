@@ -1,4 +1,13 @@
+// import {default as LinksCheckerModule} from './modules/LinksChecker/PanelModule.jsx'
+// import ReactDOM from 'react-dom';
+
 (function () {
+
+    // ReactDOM.render(
+    //     {/*<LinksCheckerModule />,*/}
+        // document.getElementById('links_checker_module')
+    // );
+
     let _tabId = chrome.devtools.inspectedWindow.tabId;
     let _panel;
 
