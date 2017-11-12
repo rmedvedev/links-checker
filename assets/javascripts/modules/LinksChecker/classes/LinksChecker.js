@@ -13,7 +13,11 @@ export default class LinksChecker {
         let $this = this;
         this._getOptions().then(function() {
             $this.linksList = $this._filterLinks($this._findLinks());
-        });
+            chrome.runtime.sendMessage({
+                name: 'linksCount',
+                count: $this.linksList.length,
+            });
+        }).catch((error)=>{console.log(error);});
     }
 
     _getOptions() {
@@ -75,6 +79,11 @@ export default class LinksChecker {
                 link.status = null;
             });
         }
+
+        chrome.runtime.sendMessage({
+            name: 'linksCount',
+            count: this.linksList.length,
+        });
 
         let link = this.linksList[this.checkerIndex];
         if (link) {
@@ -159,7 +168,7 @@ export default class LinksChecker {
             xhr.open('GET', link);
             xhr.send();
         } else {
-            this.optionsHelper.getAll().then(function(options){
+            this.optionsHelper.getAll().then(function(options) {
                 xhr.timeout = options.links_checker_timeout;
                 xhr.open('GET', link);
                 xhr.send();

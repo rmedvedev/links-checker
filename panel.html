@@ -83,45 +83,8 @@
             </div>
         </div>
 
-        <div class="col-xs-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Links checker</div>
-                <div class="panel-body">
-                    <button id="scan" class="btn btn-success">Scan</button>
-                    <button id="stop" class="btn btn-danger">Stop</button>
-                    <button id="rescan" class="btn btn-primary">Rescan</button>
-                    <button id="start_session" class="btn btn-success">Start session</button>
-                    <button id="stop_session" class="btn btn-danger">Stop session</button>
-                    <!--<span>Full time for page testing: </span><b><span id="full_time">12000 ms</span></b>-->
-                    <!--<input type="checkbox" id="session"> save url in session storage<br>-->
-                    <div class="progress margin-top">
-                        <div class="progress-bar progress-bar-success" id="links_checker_progressbar_success"
-                             style="width: 0;">
-                        </div>
-                        <div class="progress-bar progress-bar-warning" id="links_checker_progressbar_warning"
-                             style="width: 0;">
-                        </div>
-                        <div class="progress-bar progress-bar-danger" id="links_checker_progressbar_danger"
-                             style="width: 0;">
-                        </div>
-                    </div>
-                    <details id="links">
-                        <summary>Links: <span id="links_count"></span><span id="all_links_count"></span></summary>
-                    </details>
-                    <div>
-                        <strong>Session saved links: </strong>
-                        <span id="session_saved_links_count"></span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xs-4" id="links_checker_module">
         </div>
-
-        <div class="col-xs-3">
-
-            <div id="links_checker_module"></div>
-
-        </div>
-
     </div>
 </div>
 

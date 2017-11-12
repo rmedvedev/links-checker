@@ -22,6 +22,7 @@ export default class BackgroundModule {
                 this.enableSession = false;
                 this.sessionLinks = [];
                 break;
+
             case 'getSessionLinksCount':
                 connections[message.tabId].postMessage({
                     name: 'getSessionLinksCount',
@@ -34,6 +35,9 @@ export default class BackgroundModule {
     handleContentMessage(message, sender, connections) {
         let $this = this;
         switch (message.name) {
+            case 'linksCount':
+                connections[sender.tab.id].postMessage(message);
+                break;
             case 'checkLink':
                 let resultLink = $this.sessionLinks[message.link];
                 if ($this.enableSession && resultLink &&
@@ -55,23 +59,26 @@ export default class BackgroundModule {
                         });
                 }
 
-            function resultCallback(requestTime, httpStatus) {
-                chrome.tabs.sendMessage(sender.tab.id, {
-                    name: 'checkingLinksCallback',
-                    status: httpStatus,
-                    requestTime: requestTime,
-                    index: message.index,
-                });
-
-                connections[sender.tab.id].postMessage({
-                    name: 'checkedLink',
-                    url: message.link,
-                    requestTime: requestTime,
-                    status: httpStatus,
-                });
-            }
-
                 break;
         }
+
+        function resultCallback(requestTime, httpStatus)
+        {
+            chrome.tabs.sendMessage(sender.tab.id, {
+                name: 'checkingLinksCallback',
+                status: httpStatus,
+                requestTime: requestTime,
+                index: message.index,
+            });
+
+            connections[sender.tab.id].postMessage({
+                name: 'checkedLink',
+                url: message.link,
+                requestTime: requestTime,
+                status: httpStatus,
+            });
+        }
+
     }
+
 }
