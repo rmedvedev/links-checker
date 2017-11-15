@@ -1,7 +1,9 @@
+import {default as OptionsHelper} from './common/OptionsHelper.js';
+
 (function () {
 
     let optionsHelper = new OptionsHelper();
-    optionsHelper.get(function (options) {
+    optionsHelper.getAll().then(function (options) {
         renderOptions(options);
     });
 
@@ -16,7 +18,7 @@
             links_checker_black_list: document.getElementById('links_checker_black_list').value.split('\n')
         };
 
-        optionsHelper.set(options);
+        optionsHelper.setAll(options).then(()=>{alert('Save success');});
     }
 
     document.getElementById('save').addEventListener('click', function () {

@@ -23,8 +23,7 @@ export default class PageInfoProvider {
         let metaTags = [];
         Array.from(document.getElementsByTagName('meta')).
             forEach(function(element) {
-                metaTags.push(element.outerHTML.replace(/</g, '&lt;').
-                    replace(/>/g, '&gt;'));
+                metaTags.push(element.outerHTML);
             });
 
         return metaTags;
