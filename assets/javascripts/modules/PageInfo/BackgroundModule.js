@@ -6,7 +6,6 @@ export default class PageInfoModule {
                 if (sender.tab) {
                     let tabId = sender.tab.id;
                     if (tabId in connections) {
-                        message.name = 'fromContent';
                         chrome.cookies.getAll({url: message.pageInfo.url},
                             function(cookies) {
                                 message.cookies = cookies;

@@ -8,6 +8,7 @@ export default class PageInfoModule {
 
     handle(message) {
         switch (message.name) {
+            case 'init':
             case 'getPageInfo':
                 chrome.runtime.sendMessage({
                     name: 'pageInfo',

@@ -11,6 +11,9 @@ module.exports = {
         content: [
             "./assets/javascripts/content.js"
         ],
+        options: [
+            "./assets/javascripts/options.js"
+        ]
     },
     output: {
         filename: '[name].js',

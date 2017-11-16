@@ -1,4 +1,5 @@
 import {default as LinksCheckerModule} from './modules/LinksChecker/PanelModule.jsx';
+import {default as PageInfoModule} from './modules/PageInfo/PanelModule.jsx';
 
 (function() {
 
@@ -10,51 +11,25 @@ import {default as LinksCheckerModule} from './modules/LinksChecker/PanelModule.
 
         let backgroundConnection = new BackgroundConnection();
 
-        let linksCheckerModule = new LinksCheckerModule(backgroundConnection,
-            chrome.devtools.inspectedWindow.tabId,
-            window.document.getElementById('links_checker_module'));
-        linksCheckerModule.render();
-
         backgroundConnection.postMessage({
             name: 'init',
             tabId: _tabId,
         });
 
+        let pageInfoModule = new PageInfoModule(backgroundConnection,
+            chrome.devtools.inspectedWindow.tabId,
+            window.document.getElementById('page_info_module'));
+        pageInfoModule.render();
+
+        let linksCheckerModule = new LinksCheckerModule(backgroundConnection,
+            chrome.devtools.inspectedWindow.tabId,
+            window.document.getElementById('links_checker_module'));
+        linksCheckerModule.render();
+
+
         backgroundConnection.addMessageListener(function(message) {
             linksCheckerModule.handleMessage(message);
-            switch (message.name) {
-                case 'fromContent':
-                    // window.document.getElementById('links_count').innerHTML = message.links.length;
-                    window.document.getElementById(
-                        'title').innerHTML = message.pageInfo.title;
-                    window.document.getElementById(
-                        'host').innerHTML = message.pageInfo.host;
-                    window.document.getElementById(
-                        'path').innerHTML = message.pageInfo.path;
-                    window.document.getElementById(
-                        'query_string').innerHTML = message.pageInfo.query_string;
-                    window.document.getElementById(
-                        'https').innerHTML = message.pageInfo.https ?
-                        'Yes' :
-                        'No';
-                    // window.document.getElementById('cookies_count').innerHTML = message.cookies.length;
-                    window.document.getElementById('cookies').innerHTML = '';
-                    message.cookies.forEach(function(cookie) {
-                        window.document.getElementById(
-                            'cookies').innerHTML += '<div><strong>' +
-                            cookie.name + ':</strong> ' + cookie.value +
-                            '</div>';
-                    });
-
-                    window.document.getElementById('meta_tags').innerHTML = '';
-                    message.metaTags.forEach(function(metaTag) {
-                        window.document.getElementById(
-                            'meta_tags').innerHTML += '<div>' + metaTag +
-                            '</div>';
-                    });
-                    break;
-
-            }
+            pageInfoModule.handleMessage(message);
         });
     }
 

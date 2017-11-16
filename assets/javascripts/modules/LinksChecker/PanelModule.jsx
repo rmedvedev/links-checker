@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ProgressBar from './classes/ProgressBar.jsx';
+import LinksReport from './classes/LinksReport.jsx';
 
 export default class PanelModule {
 
@@ -16,6 +17,7 @@ export default class PanelModule {
                 warning: 0,
                 error: 0,
             },
+            list: new Map(),
         };
         this._scan = this._scan.bind(this);
         this._stop = this._stop.bind(this);
@@ -32,23 +34,23 @@ export default class PanelModule {
 
     render() {
         ReactDOM.render(
-            <div class="panel panel-default">
-                <div class="panel-heading">Links checker</div>
-                <div class="panel-body">
-                    <button id="scan" class="btn btn-success"
+            <div className="panel panel-default">
+                <div className="panel-heading">Links checker</div>
+                <div className="panel-body">
+                    <button className="btn btn-success"
                             onClick={this._scan}>Scan
                     </button>
-                    <button id="stop" class="btn btn-danger"
+                    <button className="btn btn-danger"
                             onClick={this._stop}>Stop
                     </button>
-                    <button id="rescan" class="btn btn-primary"
+                    <button className="btn btn-primary"
                             onClick={this._rescan}>Rescan
                     </button>
-                    <button id="start_session" class="btn btn-success"
+                    <button className="btn btn-success"
                             onClick={this._startSession}>Start
                         session
                     </button>
-                    <button id="stop_session" class="btn btn-danger"
+                    <button className="btn btn-danger"
                             onClick={this._stopSession}>Stop
                         session
                     </button>
@@ -57,13 +59,13 @@ export default class PanelModule {
                                  error={this.linksData.statuses.error}
                                  all={this.linksData.count}/>
 
-                    <details id="links">
-                        <summary>Links: {this.linksData.count}</summary>
-                    </details>
                     <div>
-                        <strong>Session saved
-                            links: {this.linksData.sessionCount}</strong>
+                        <strong>Links: </strong>{this.linksData.count}
                     </div>
+                    <div>
+                        <strong>Session links: </strong>{this.linksData.sessionCount}
+                    </div>
+                    <LinksReport list={this.linksData.list}/>
 
                 </div>
             </div>,
@@ -137,6 +139,8 @@ export default class PanelModule {
         } else {
             this.linksData.statuses.error++;
         }
+
+        this.linksData.list.set(url, status);
     }
 
     getSessionLinksCount() {
