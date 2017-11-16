@@ -1,7 +1,7 @@
-function PageHelper() {
+export default class PageInfoProvider {
 
     //common info about page
-    this.getInfo = function () {
+    getInfo() {
         let pageInfo = {};
         pageInfo.https = location.protocol === 'https:';
         pageInfo.title = document.title;
@@ -14,16 +14,17 @@ function PageHelper() {
     };
 
     //cookies
-    this.getCookies = function () {
+    getCookies() {
         return document.cookie;
     };
 
     //array of page's meta tags
-    this.getMetaTags = function () {
+    getMetaTags() {
         let metaTags = [];
-        Array.from(document.getElementsByTagName('meta')).forEach(function (element) {
-            metaTags.push(element.outerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
-        });
+        Array.from(document.getElementsByTagName('meta')).
+            forEach(function(element) {
+                metaTags.push(element.outerHTML);
+            });
 
         return metaTags;
     };

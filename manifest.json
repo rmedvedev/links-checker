@@ -10,9 +10,7 @@
   "devtools_page": "devtools.html",
   "background": {
     "scripts": [
-      "assets/javascripts/common/optionsHelper.js",
-      "assets/javascripts/check.js",
-      "assets/javascripts/background.js"
+      "dist/background.js"
     ],
     "persistent": false
   },
@@ -27,10 +25,7 @@
         "https://*/*"
       ],
       "js": [
-        "assets/javascripts/common/optionsHelper.js",
-        "assets/javascripts/content/links.js",
-        "assets/javascripts/content/pageHelper.js",
-        "assets/javascripts/content.js"
+        "dist/content.js"
       ],
       "css": [
         "assets/styles/content.css"
