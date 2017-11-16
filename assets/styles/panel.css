@@ -7,16 +7,15 @@ summary {
     font-weight: bold;
 }
 
-.column1 {
+.column {
     float: left;
-    width: 50%;
-}
-
-.column2 {
-    float: left;
-    width: 50%;
+    width: 30%;
 }
 
 details > details {
     margin-left: 10px;
+}
+
+.margin-top {
+    margin-top: 5px;
 }

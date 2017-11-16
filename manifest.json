@@ -10,7 +10,7 @@
   "devtools_page": "devtools.html",
   "background": {
     "scripts": [
-      "assets/javascripts/background.js"
+      "dist/background.js"
     ],
     "persistent": false
   },
@@ -20,14 +20,26 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["assets/javascripts/content.js"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "dist/content.js"
+      ],
+      "css": [
+        "assets/styles/content.css"
+      ]
     }
   ],
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
   "permissions": [
     "tabs",
     "cookies",
+    "storage",
     "http://*/*",
     "https://*/*",
     "*://*/*",
