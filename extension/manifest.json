@@ -4,7 +4,7 @@
   "version": "0.1",
   "description": "Online manual test assistance",
   "icons": {
-    "96": "assets/images/icon96.png"
+    "96": "images/icon96.png"
   },
   "minimum_chrome_version": "35.0",
   "devtools_page": "devtools.html",
@@ -28,7 +28,7 @@
         "dist/content.js"
       ],
       "css": [
-        "assets/styles/content.css"
+        "styles/content.css"
       ]
     }
   ],
