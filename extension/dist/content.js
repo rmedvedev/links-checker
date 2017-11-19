@@ -106,6 +106,13 @@ var OptionsHelper = function () {
                 chrome.storage.sync.set(options, resolve);
             });
         }
+    }, {
+        key: 'set',
+        value: function set(key, value) {
+            return new Promise(function (resolve) {
+                chrome.storage.sync.set({ key: value }, resolve);
+            });
+        }
     }]);
 
     return OptionsHelper;

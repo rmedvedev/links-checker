@@ -20,4 +20,10 @@ export default class OptionsHelper {
             chrome.storage.sync.set(options, resolve);
         });
     }
+
+    set(key, value) {
+        return new Promise(function(resolve) {
+            chrome.storage.sync.set({key: value}, resolve);
+        });
+    }
 }

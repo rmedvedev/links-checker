@@ -106,6 +106,13 @@ var OptionsHelper = function () {
                 chrome.storage.sync.set(options, resolve);
             });
         }
+    }, {
+        key: 'set',
+        value: function set(key, value) {
+            return new Promise(function (resolve) {
+                chrome.storage.sync.set({ key: value }, resolve);
+            });
+        }
     }]);
 
     return OptionsHelper;
@@ -138,6 +145,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (function () {
 
     var optionsHelper = new _OptionsHelper2.default();
+
+    var links_list = [];
+
     optionsHelper.getAll().then(function (options) {
         renderOptions(options);
     });
@@ -150,7 +160,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     function saveOptions() {
         var options = {
             links_checker_timeout: document.getElementById('links_checker_timeout').value * 1,
-            links_checker_black_list: document.getElementById('links_checker_black_list').value.split('\n')
+            links_checker_black_list: document.getElementById('links_checker_black_list').value.split('\n'),
+            links_list: links_list
         };
 
         optionsHelper.setAll(options).then(function () {
@@ -162,16 +173,53 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         saveOptions();
     });
 
-    document.querySelector('#myfile').onchange = function (e) {
+    document.getElementById('save_to_file').addEventListener('click', function () {
+        saveToFile();
+    });
+
+    document.querySelector('#links_file').onchange = function (e) {
         var files = this.files;
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            console.log(e.target.result);
+            var listFile = JSON.parse(e.target.result);
+            listFile['pages'].forEach(function (page) {
+                links_list.push(page['url']);
+            });
+            console.log(links_list);
         };
 
         reader.readAsText(files[0]);
     };
+
+    function saveToFile() {
+        var textToWrite = JSON.stringify({
+            version: 1,
+            pages: links_list.map(function (url) {
+                return { url: url };
+            })
+        });
+        var textFileAsBlob = new Blob([textToWrite], { type: 'application/json' });
+        var fileNameToSaveAs = "links_list.json";
+
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null) {
+            // Chrome allows the link to be clicked
+            // without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        } else {
+            // Firefox requires the link to be added to the DOM
+            // before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
+
+        downloadLink.click();
+    }
 })();
 
 /***/ })
