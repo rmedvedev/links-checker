@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">OMTA Settings</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="links_file">Links file</label>
+                            <div>
+                                <input type="file" id="links_file" class="pull-left"/>
+                                <button class="btn btn-success pull-right" id="save_to_file">S</button>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <hr>
+                        <h3>Links checker settings</h3>
+                        <div class="form-group">
+                            <label for="links_checker_timeout">Links checker timeout,
+                                ms</label>
+                            <input type="number" class="form-control" id="links_checker_timeout"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="links_checker_black_list">Links checker
+                                blacklist</label>
+                            <textarea class="form-control" id="links_checker_black_list" cols="30"
+                                      rows="10"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button id="save" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="dist/options.js"></script>
+</body>
+</html>
