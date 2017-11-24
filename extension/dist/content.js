@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 53);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -122,25 +122,25 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 38:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(39);
+module.exports = __webpack_require__(54);
 
 
 /***/ }),
 
-/***/ 39:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _ContentModule = __webpack_require__(40);
+var _ContentModule = __webpack_require__(55);
 
 var _ContentModule2 = _interopRequireDefault(_ContentModule);
 
-var _ContentModule3 = __webpack_require__(41);
+var _ContentModule3 = __webpack_require__(56);
 
 var _ContentModule4 = _interopRequireDefault(_ContentModule3);
 
@@ -160,7 +160,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 40:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -172,7 +172,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _LinksChecker = __webpack_require__(8);
+var _LinksChecker = __webpack_require__(9);
 
 var _LinksChecker2 = _interopRequireDefault(_LinksChecker);
 
@@ -221,7 +221,7 @@ exports.default = ContentModule;
 
 /***/ }),
 
-/***/ 41:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -233,7 +233,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _PageInfoProvider = __webpack_require__(42);
+var _PageInfoProvider = __webpack_require__(57);
 
 var _PageInfoProvider2 = _interopRequireDefault(_PageInfoProvider);
 
@@ -272,7 +272,7 @@ exports.default = PageInfoModule;
 
 /***/ }),
 
-/***/ 42:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -337,7 +337,7 @@ exports.default = PageInfoProvider;
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -349,7 +349,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _OptionsHelper = __webpack_require__(3);
+var _OptionsHelper = __webpack_require__(4);
 
 var _OptionsHelper2 = _interopRequireDefault(_OptionsHelper);
 

@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -122,25 +122,25 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 34:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(35);
+module.exports = __webpack_require__(50);
 
 
 /***/ }),
 
-/***/ 35:
+/***/ 50:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _BackgroundModule = __webpack_require__(36);
+var _BackgroundModule = __webpack_require__(51);
 
 var _BackgroundModule2 = _interopRequireDefault(_BackgroundModule);
 
-var _BackgroundModule3 = __webpack_require__(37);
+var _BackgroundModule3 = __webpack_require__(52);
 
 var _BackgroundModule4 = _interopRequireDefault(_BackgroundModule3);
 
@@ -189,7 +189,7 @@ var pageInfoModule = new _BackgroundModule4.default();
 
 /***/ }),
 
-/***/ 36:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -201,7 +201,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _LinksChecker = __webpack_require__(8);
+var _LinksChecker = __webpack_require__(9);
 
 var _LinksChecker2 = _interopRequireDefault(_LinksChecker);
 
@@ -296,7 +296,7 @@ exports.default = BackgroundModule;
 
 /***/ }),
 
-/***/ 37:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -345,7 +345,7 @@ exports.default = PageInfoModule;
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -357,7 +357,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _OptionsHelper = __webpack_require__(3);
+var _OptionsHelper = __webpack_require__(4);
 
 var _OptionsHelper2 = _interopRequireDefault(_OptionsHelper);
 

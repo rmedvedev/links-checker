@@ -1,5 +1,7 @@
 import {default as LinksCheckerModule} from './modules/LinksChecker/PanelModule.jsx';
 import {default as PageInfoModule} from './modules/PageInfo/PanelModule.jsx';
+import './common/bootstrap/bootstrap.js'
+import './common/bootstrap/bootstrap.less'
 
 (function() {
 
