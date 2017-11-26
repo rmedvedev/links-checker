@@ -28,14 +28,10 @@
         "dist/content.js"
       ],
       "css": [
-        "styles/content.css"
+        "dist/content.css"
       ]
     }
   ],
-//  "options_ui": {
-//    "page": "options.html",
-//    "chrome_style": true
-//  },
   "options_page": "options.html",
   "permissions": [
     "tabs",

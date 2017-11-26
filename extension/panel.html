@@ -2,16 +2,22 @@
 <html>
 <head>
     <link rel="stylesheet" href="dist/panel.css">
+    <script src="dist/panel.js"></script>
 </head>
 <body>
 <br>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-5" id="page_info_module">
-
-        </div>
-
-        <div class="col-xs-4" id="links_checker_module">
+        <div class="col-xs-12">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#page_info_module" aria-controls="page_info_module" role="tab" data-toggle="tab">Page info</a></li>
+                <li role="presentation"><a href="#links_checker_module" aria-controls="links_checker_module" role="tab" data-toggle="tab">Links checker</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="page_info_module">
+                </div>
+                <div role="tabpanel" class="tab-pane" id="links_checker_module"></div>
+            </div>
         </div>
     </div>
 </div>

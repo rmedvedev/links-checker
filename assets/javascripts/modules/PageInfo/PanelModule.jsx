@@ -8,8 +8,7 @@ export default class PanelModule {
         this.tabId = tabId;
         this.mainBlockNode = domNode;
 
-        this.pageInfo = {
-        };
+        this.pageInfo = {};
         this.cookies = [];
         this.metaTags = [];
         this.handleMessage = this.handleMessage.bind(this);
@@ -17,62 +16,81 @@ export default class PanelModule {
 
     render() {
         ReactDOM.render(
-            <div>
+            <div className="row col-xs-6 margin-top-small">
                 <div className="panel panel-primary">
-                    <div className="panel-heading" role="tab" id="pageInfo">
+                    <div className="panel-heading" role="tab"
+                         id="pageInfo">
                         <h5 className="panel-title">
-                            <a role="button" data-toggle="collapse" href="#pageInfoPanel" aria-expanded="true"
+                            <a role="button" data-toggle="collapse"
+                               href="#pageInfoPanel"
+                               aria-expanded="true"
                                aria-controls="pageInfoPanel">
                                 Page info
                             </a>
                         </h5>
                     </div>
-                    <div id="pageInfoPanel" className="panel-collapse collapse in" role="tabpanel"
+                    <div id="pageInfoPanel"
+                         className="panel-collapse collapse in"
+                         role="tabpanel"
                          aria-labelledby="pageInfo">
                         <div className="panel-body">
                             <div>
                                 <b>Title:</b>
-                                <span id="title"> {this.pageInfo.title}</span>
+                                <span
+                                    id="title"> {this.pageInfo.title}</span>
                             </div>
 
                             <div>
                                 <b>Https:</b>
-                                <span id="https"> {this.pageInfo.https ? 'Yes' : 'No'}</span>
+                                <span id="https"> {this.pageInfo.https ?
+                                    'Yes' :
+                                    'No'}</span>
                             </div>
 
                             <div>
                                 <b>Host:</b>
-                                <span id="host"> {this.pageInfo.host}</span>
+                                <span
+                                    id="host"> {this.pageInfo.host}</span>
                             </div>
 
                             <div>
                                 <b>Path:</b>
-                                <span id="path"> {this.pageInfo.path}</span>
+                                <span
+                                    id="path"> {this.pageInfo.path}</span>
                             </div>
 
                             <div>
                                 <b>Query string:</b>
-                                <span id="query_string"> {this.pageInfo.query_string}</span>
+                                <span
+                                    id="query_string"> {this.pageInfo.query_string}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="panel panel-primary">
-                    <div className="panel-heading" role="tab" id="cookiesInfo">
+                    <div className="panel-heading" role="tab"
+                         id="cookiesInfo">
                         <h5 className="panel-title">
-                            <a role="button" data-toggle="collapse" href="#cookiesPanel" aria-expanded="false"
+                            <a role="button" data-toggle="collapse"
+                               href="#cookiesPanel"
+                               aria-expanded="false"
                                aria-controls="cookiesPanel">
                                 Cookies
                             </a>
                         </h5>
                     </div>
-                    <div id="cookiesPanel" className="panel-collapse collapse" role="tabpanel"
+                    <div id="cookiesPanel"
+                         className="panel-collapse collapse"
+                         role="tabpanel"
                          aria-labelledby="cookiesInfo">
                         <div className="panel-body">
-                            <span id="cookies" style={{ overflowWrap: "break-word" }}>
-                                {this.cookies.map(function(cookie){
-                                    return <div><b>{cookie.name}</b>{cookie.value}</div>;
+                            <span id="cookies"
+                                  style={{overflowWrap: 'break-word'}}>
+                                {this.cookies.map(function(cookie) {
+                                    return <div>
+                                        <b>{cookie.name}: </b>{cookie.value}
+                                    </div>;
                                 })}
                             </span>
                         </div>
@@ -80,18 +98,23 @@ export default class PanelModule {
                 </div>
 
                 <div className="panel panel-primary">
-                    <div className="panel-heading" role="tab" id="metaTags">
+                    <div className="panel-heading" role="tab"
+                         id="metaTags">
                         <h5 className="panel-title">
-                            <a role="button" data-toggle="collapse" href="#metatagsPanel" aria-expanded="false"
+                            <a role="button" data-toggle="collapse"
+                               href="#metatagsPanel"
+                               aria-expanded="false"
                                aria-controls="metatagsPanel">
                                 Meta tags
                             </a>
                         </h5>
                     </div>
-                    <div id="metatagsPanel" className="panel-collapse collapse" role="tabpanel" aria-labelledby="metaTags">
+                    <div id="metatagsPanel"
+                         className="panel-collapse collapse"
+                         role="tabpanel" aria-labelledby="metaTags">
                         <div className="panel-body">
                             <span id="meta_tags">
-                                   {this.metaTags.map(function(metaTag){
+                                   {this.metaTags.map(function(metaTag) {
                                        return <div>{metaTag}</div>;
                                    })}
                             </span>

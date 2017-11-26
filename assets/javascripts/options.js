@@ -1,4 +1,6 @@
 import {default as OptionsHelper} from './common/OptionsHelper.js';
+import './common/bootstrap/bootstrap.js'
+import './common/bootstrap/bootstrap.less'
 
 (function() {
 

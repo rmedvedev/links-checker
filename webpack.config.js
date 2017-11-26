@@ -7,6 +7,9 @@ module.exports = {
         panel: [
             './assets/javascripts/panel.js'
         ],
+        devtools: [
+            './assets/javascripts/devtools.js'
+        ],
         background: [
             './assets/javascripts/background.js',
         ],
@@ -33,7 +36,7 @@ module.exports = {
             },
             {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'},
             {
-                test: /\.less$/,
+                test: /\.(less|css)$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: ['css-loader', 'less-loader']
@@ -43,8 +46,13 @@ module.exports = {
     },
     plugins: [
         new webpack.ProvidePlugin({
+            $: 'jquery',             // bootstrap 3.x requires
             jQuery: 'jquery',             // bootstrap 3.x requires
         }),
         new ExtractTextPlugin("[name].css")
-    ]
+    ],
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+    }
 };

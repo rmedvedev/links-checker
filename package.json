@@ -4,7 +4,8 @@
   "description": "",
   "main": "popup.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
