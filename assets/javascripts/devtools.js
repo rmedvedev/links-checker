@@ -1,5 +1,6 @@
 import {default as LinksCheckerModule} from './modules/LinksChecker/PanelModule.jsx';
 import {default as PageInfoModule} from './modules/PageInfo/PanelModule.jsx';
+import {default as ValidatorPagesModule} from './modules/ValidatorPages/PanelModule.jsx';
 
 (function() {
 
@@ -26,6 +27,10 @@ import {default as PageInfoModule} from './modules/PageInfo/PanelModule.jsx';
             window.document.getElementById('links_checker_module'));
         linksCheckerModule.render();
 
+        let validatorPagesModule = new ValidatorPagesModule(backgroundConnection,
+            chrome.devtools.inspectedWindow.tabId,
+            window.document.getElementById('validator_pages_module'));
+        validatorPagesModule.render();
 
         backgroundConnection.addMessageListener(function(message) {
             linksCheckerModule.handleMessage(message);
