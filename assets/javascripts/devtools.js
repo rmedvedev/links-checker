@@ -35,6 +35,7 @@ import {default as ValidatorPagesModule} from './modules/ValidatorPages/PanelMod
         backgroundConnection.addMessageListener(function(message) {
             linksCheckerModule.handleMessage(message);
             pageInfoModule.handleMessage(message);
+            validatorPagesModule.handleMessage(message);
         });
     }
 

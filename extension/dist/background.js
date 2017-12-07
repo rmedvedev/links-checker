@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 53);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -331,25 +331,25 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 53:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(54);
+module.exports = __webpack_require__(55);
 
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _BackgroundModule = __webpack_require__(55);
+var _BackgroundModule = __webpack_require__(56);
 
 var _BackgroundModule2 = _interopRequireDefault(_BackgroundModule);
 
-var _BackgroundModule3 = __webpack_require__(56);
+var _BackgroundModule3 = __webpack_require__(57);
 
 var _BackgroundModule4 = _interopRequireDefault(_BackgroundModule3);
 
@@ -398,7 +398,7 @@ var pageInfoModule = new _BackgroundModule4.default();
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -505,7 +505,7 @@ exports.default = BackgroundModule;
 
 /***/ }),
 
-/***/ 56:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

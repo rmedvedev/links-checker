@@ -9,10 +9,12 @@ export default class ValidatorPagesModule {
         this.tabId = tabId;
         this.mainBlockNode = domNode;
         this.linksList = [];
+        this.pageInfo = {};
 
         this.handleMessage = this.handleMessage.bind(this);
         this.download = this.download.bind(this);
         this.upload = this.upload.bind(this);
+        this.addLink = this.addLink.bind(this);
     }
 
     render() {
@@ -29,10 +31,16 @@ export default class ValidatorPagesModule {
                         </div>
                     </form>
 
-                    <button onClick={this.download} className="btn btn-success">
+                    <button onClick={this.download} className="btn btn-primary btn-lg">
                         <i className="glyphicon glyphicon-download"></i>
                         Save config
-                        </button>
+                    </button>
+                    <br/>
+                    <button onClick={this.addLink} className="btn btn-success btn-lg">
+                        <i className="glyphicon glyphicon-plus"></i>
+                        Add link
+                    </button>
+
                 </div>
                 <div className="col-xs-3">
                     <h5><strong>Count of links:</strong> {this.linksList.length}</h5>
@@ -46,6 +54,9 @@ export default class ValidatorPagesModule {
 
     handleMessage(message) {
         switch (message.name) {
+            case 'pageInfo':
+                this.pageInfo = message.pageInfo;
+                break;
         }
         this.render();
     }
@@ -55,9 +66,9 @@ export default class ValidatorPagesModule {
         let files = event.target.files;
         let reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             let listFile = JSON.parse(e.target.result);
-            listFile['pages'].forEach(function(page) {
+            listFile['pages'].forEach(function (page) {
                 $this.linksList.push(page['url']);
             });
             $this.render();
@@ -69,7 +80,7 @@ export default class ValidatorPagesModule {
     download(event) {
         let textToWrite = JSON.stringify({
             version: 1,
-            pages: this.linksList.map(function(url) {
+            pages: this.linksList.map(function (url) {
                 return {url: url};
             }),
         });
@@ -82,6 +93,13 @@ export default class ValidatorPagesModule {
             textFileAsBlob);
 
         downloadLink.click();
+    }
+
+    addLink() {
+        if(this.linksList.indexOf(this.pageInfo.url) === -1){
+            this.linksList.push(this.pageInfo.url);
+        }
+        this.render();
     }
 }
 
