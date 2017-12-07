@@ -32,13 +32,11 @@ export default class ValidatorPagesModule {
                     </form>
 
                     <button onClick={this.download} className="btn btn-primary btn-lg">
-                        <i className="glyphicon glyphicon-download"></i>
-                        Save config
+                        <i className="glyphicon glyphicon-download"></i> Save config
                     </button>
                     <br/>
                     <button onClick={this.addLink} className="btn btn-success btn-lg">
-                        <i className="glyphicon glyphicon-plus"></i>
-                        Add link
+                        <i className="glyphicon glyphicon-plus"></i> Add link
                     </button>
 
                 </div>
