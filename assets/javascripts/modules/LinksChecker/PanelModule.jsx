@@ -19,13 +19,16 @@ export default class PanelModule {
             },
             list: new Map(),
         };
+
+        this._sessionState = false;
+
         this._scan = this._scan.bind(this);
         this._stop = this._stop.bind(this);
         this._rescan = this._rescan.bind(this);
-        this._startSession = this._startSession.bind(this);
-        this._stopSession = this._stopSession.bind(this);
         this.handleMessage = this.handleMessage.bind(this);
         this.addLink = this.addLink.bind(this);
+        this._sessionChange = this._sessionChange.bind(this);
+        this._resetLinksData = this._resetLinksData.bind(this);
 
         setInterval(() => {
             this.getSessionLinksCount();
@@ -34,39 +37,48 @@ export default class PanelModule {
 
     render() {
         ReactDOM.render(
-            <div className="panel panel-default">
+            <div className="panel panel-default margin-top-small">
                 <div className="panel-heading">Links checker</div>
                 <div className="panel-body">
-                    <button className="btn btn-success"
-                            onClick={this._scan}>Scan
-                    </button>
-                    <button className="btn btn-danger"
-                            onClick={this._stop}>Stop
-                    </button>
-                    <button className="btn btn-primary"
-                            onClick={this._rescan}>Rescan
-                    </button>
-                    <button className="btn btn-success"
-                            onClick={this._startSession}>Start
-                        session
-                    </button>
-                    <button className="btn btn-danger"
-                            onClick={this._stopSession}>Stop
-                        session
-                    </button>
-                    <ProgressBar success={this.linksData.statuses.success}
-                                 warning={this.linksData.statuses.warning}
-                                 error={this.linksData.statuses.error}
-                                 all={this.linksData.count}/>
+                    <div className="row">
+                        <div className="col-xs-5">
+                            <div className="btn-group" role="group">
+                                <button className="btn btn-success"
+                                        onClick={this._scan}
+                                        title="Scan all links on page">
+                                    <i className="glyphicon glyphicon-search"></i> Scan
+                                </button>
+                                <button className="btn btn-danger"
+                                        onClick={this._stop}>
+                                    <i className="glyphicon glyphicon-stop"></i> Stop
+                                </button>
+                                <button className="btn btn-primary"
+                                        onClick={this._rescan}>
+                                    <i className="glyphicon glyphicon-refresh"></i> Rescan
+                                </button>
+                            </div>
+                            <ProgressBar
+                                success={this.linksData.statuses.success}
+                                warning={this.linksData.statuses.warning}
+                                error={this.linksData.statuses.error}
+                                all={this.linksData.count}/>
+                            <div>
+                                <strong>Links: </strong>{this.linksData.count}
+                            </div>
 
-                    <div>
-                        <strong>Links: </strong>{this.linksData.count}
+                            <LinksReport list={this.linksData.list}/>
+                        </div>
+                        <div className="col-xs-2">
+                            <label className="checkbox-inline">
+                                <input type="checkbox" name="session"
+                                       onChange={this._sessionChange}/>Session
+                            </label>
+                            <div className="margin-top">
+                                <strong>Saved
+                                    links: </strong>{this.linksData.sessionCount}
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Session links: </strong>{this.linksData.sessionCount}
-                    </div>
-                    <LinksReport list={this.linksData.list}/>
-
                 </div>
             </div>,
             this.mainBlockNode,
@@ -93,32 +105,16 @@ export default class PanelModule {
             tabId: this.tabId,
         });
 
-        this.linksData.statuses = {
-            success: 0,
-            warning: 0,
-            error: 0,
-        };
+        this._resetLinksData();
         this.render();
-    }
-
-    _startSession() {
-        this.connection.postMessage({
-            name: 'startSession',
-            tabId: this.tabId,
-        });
-    }
-
-    _stopSession() {
-        this.connection.postMessage({
-            name: 'stopSession',
-            tabId: this.tabId,
-        });
     }
 
     handleMessage(message) {
         switch (message.name) {
             case 'linksCount':
                 this.linksData.count = message.count;
+                this._resetLinksData();
+                this.render();
                 break;
             case 'checkedLink':
                 this.addLink(message.url, message.status);
@@ -148,6 +144,29 @@ export default class PanelModule {
             name: 'getSessionLinksCount',
             tabId: this.tabId,
         });
+    }
+
+    _sessionChange(event) {
+        this._sessionState = !!event.target.checked;
+
+        let messageName = 'stopSession';
+        if (this._sessionState) {
+            messageName = 'startSession';
+        }
+
+        this.connection.postMessage({
+            name: messageName,
+            tabId: this.tabId,
+        });
+    }
+
+    _resetLinksData() {
+        this.linksData.statuses = {
+            success: 0,
+            warning: 0,
+            error: 0,
+        };
+        this.linksData.list = new Map();
     }
 }
 

@@ -1,4 +1,5 @@
 import LinksChecker from './classes/LinksChecker.js';
+import './content.css';
 
 export default class ContentModule {
 

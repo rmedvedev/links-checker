@@ -9,7 +9,7 @@ export default class LinksReport extends React.Component {
             if (!statuses.has(status)) {
                 statuses.set(status, {name: status, urls: []});
             }
-            statuses.get(status).urls.push(<div><a href={url}>{url}</a></div>);
+            statuses.get(status).urls.push(<div><a href={url} target="_blank">{url}</a></div>);
         });
 
         let tabs = [];

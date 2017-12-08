@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 3:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77,272 +77,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var OptionsHelper = function () {
-    function OptionsHelper() {
-        _classCallCheck(this, OptionsHelper);
-
-        this.LINKS_CHECKER_BLACK_LIST = 'links_checker_black_list';
-        this.LINKS_CHECKER_TIMEOUT = 'links_checker_timeout';
-
-        this.defaultOptions = {};
-        this.defaultOptions[this.LINKS_CHECKER_BLACK_LIST] = [];
-        this.defaultOptions[this.LINKS_CHECKER_TIMEOUT] = 30 * 1000;
-    }
-
-    _createClass(OptionsHelper, [{
-        key: 'getAll',
-        value: function getAll() {
-            var $this = this;
-            return new Promise(function (resolve) {
-                chrome.storage.sync.get($this.defaultOptions, resolve);
-            });
-        }
-    }, {
-        key: 'setAll',
-        value: function setAll(options) {
-            return new Promise(function (resolve) {
-                chrome.storage.sync.set(options, resolve);
-            });
-        }
-    }]);
-
-    return OptionsHelper;
-}();
-
-exports.default = OptionsHelper;
-
-/***/ }),
-
-/***/ 38:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(39);
-
-
-/***/ }),
-
-/***/ 39:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _ContentModule = __webpack_require__(40);
-
-var _ContentModule2 = _interopRequireDefault(_ContentModule);
-
-var _ContentModule3 = __webpack_require__(41);
-
-var _ContentModule4 = _interopRequireDefault(_ContentModule3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(function () {
-    var linksCheckerModule = new _ContentModule2.default();
-    var pageInfoModule = new _ContentModule4.default();
-
-    chrome.runtime.onMessage.addListener(function (message) {
-        linksCheckerModule.handle(message);
-        pageInfoModule.handle(message);
-    });
-
-    pageInfoModule.handle({ name: 'init' });
-})();
-
-/***/ }),
-
-/***/ 40:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _LinksChecker = __webpack_require__(8);
-
-var _LinksChecker2 = _interopRequireDefault(_LinksChecker);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ContentModule = function () {
-    function ContentModule() {
-        _classCallCheck(this, ContentModule);
-
-        this.linksChecker = new _LinksChecker2.default();
-        this.linksChecker.init();
-    }
-
-    _createClass(ContentModule, [{
-        key: 'getLinks',
-        value: function getLinks() {
-            this.linksChecker.getLinks();
-        }
-    }, {
-        key: 'handle',
-        value: function handle(message) {
-            switch (message.name) {
-                case 'checkLinks':
-                    this.linksChecker.checkLinks(true);
-                    console.log('Start checking links.');
-                    break;
-                case 'checkingLinksCallback':
-                    this.linksChecker.checkLinksCallback(message);
-                    break;
-                case 'stopCheckLinks':
-                    this.linksChecker.stopCheckLinks();
-                    break;
-                case 'rescanTimeoutLinks':
-                    this.linksChecker.rescanTimeoutLinks();
-                    break;
-            }
-        }
-    }]);
-
-    return ContentModule;
-}();
-
-exports.default = ContentModule;
-
-/***/ }),
-
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _PageInfoProvider = __webpack_require__(42);
-
-var _PageInfoProvider2 = _interopRequireDefault(_PageInfoProvider);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var PageInfoModule = function () {
-    function PageInfoModule() {
-        _classCallCheck(this, PageInfoModule);
-
-        this.pageInfoProvider = new _PageInfoProvider2.default();
-    }
-
-    _createClass(PageInfoModule, [{
-        key: 'handle',
-        value: function handle(message) {
-            switch (message.name) {
-                case 'init':
-                case 'getPageInfo':
-                    chrome.runtime.sendMessage({
-                        name: 'pageInfo',
-                        pageInfo: this.pageInfoProvider.getInfo(),
-                        cookies: this.pageInfoProvider.getCookies(),
-                        metaTags: this.pageInfoProvider.getMetaTags()
-                    });
-                    break;
-            }
-        }
-    }]);
-
-    return PageInfoModule;
-}();
-
-exports.default = PageInfoModule;
-
-/***/ }),
-
-/***/ 42:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var PageInfoProvider = function () {
-    function PageInfoProvider() {
-        _classCallCheck(this, PageInfoProvider);
-    }
-
-    _createClass(PageInfoProvider, [{
-        key: 'getInfo',
-
-
-        //common info about page
-        value: function getInfo() {
-            var pageInfo = {};
-            pageInfo.https = location.protocol === 'https:';
-            pageInfo.title = document.title;
-            pageInfo.host = location.hostname;
-            pageInfo.path = location.pathname;
-            pageInfo.query_string = location.search;
-            pageInfo.url = location.href;
-
-            return pageInfo;
-        }
-    }, {
-        key: 'getCookies',
-
-
-        //cookies
-        value: function getCookies() {
-            return document.cookie;
-        }
-    }, {
-        key: 'getMetaTags',
-
-
-        //array of page's meta tags
-        value: function getMetaTags() {
-            var metaTags = [];
-            Array.from(document.getElementsByTagName('meta')).forEach(function (element) {
-                metaTags.push(element.outerHTML);
-            });
-
-            return metaTags;
-        }
-    }]);
-
-    return PageInfoProvider;
-}();
-
-exports.default = PageInfoProvider;
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _OptionsHelper = __webpack_require__(3);
+var _OptionsHelper = __webpack_require__(4);
 
 var _OptionsHelper2 = _interopRequireDefault(_OptionsHelper);
 
@@ -442,11 +177,6 @@ var LinksChecker = function () {
                 });
             }
 
-            chrome.runtime.sendMessage({
-                name: 'linksCount',
-                count: this.linksList.length
-            });
-
             var link = this.linksList[this.checkerIndex];
             if (link) {
                 link.domNode.classList.add('checker-progress');
@@ -541,6 +271,287 @@ var LinksChecker = function () {
 }();
 
 exports.default = LinksChecker;
+
+/***/ }),
+
+/***/ 4:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var OptionsHelper = function () {
+    function OptionsHelper() {
+        _classCallCheck(this, OptionsHelper);
+
+        this.LINKS_CHECKER_BLACK_LIST = 'links_checker_black_list';
+        this.LINKS_CHECKER_TIMEOUT = 'links_checker_timeout';
+
+        this.defaultOptions = {};
+        this.defaultOptions[this.LINKS_CHECKER_BLACK_LIST] = [];
+        this.defaultOptions[this.LINKS_CHECKER_TIMEOUT] = 30 * 1000;
+    }
+
+    _createClass(OptionsHelper, [{
+        key: 'getAll',
+        value: function getAll() {
+            var $this = this;
+            return new Promise(function (resolve) {
+                chrome.storage.sync.get($this.defaultOptions, resolve);
+            });
+        }
+    }, {
+        key: 'setAll',
+        value: function setAll(options) {
+            return new Promise(function (resolve) {
+                chrome.storage.sync.set(options, resolve);
+            });
+        }
+    }, {
+        key: 'set',
+        value: function set(key, value) {
+            return new Promise(function (resolve) {
+                chrome.storage.sync.set({ key: value }, resolve);
+            });
+        }
+    }]);
+
+    return OptionsHelper;
+}();
+
+exports.default = OptionsHelper;
+
+/***/ }),
+
+/***/ 58:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(59);
+
+
+/***/ }),
+
+/***/ 59:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ContentModule = __webpack_require__(60);
+
+var _ContentModule2 = _interopRequireDefault(_ContentModule);
+
+var _ContentModule3 = __webpack_require__(62);
+
+var _ContentModule4 = _interopRequireDefault(_ContentModule3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(function () {
+    var linksCheckerModule = new _ContentModule2.default();
+    var pageInfoModule = new _ContentModule4.default();
+
+    chrome.runtime.onMessage.addListener(function (message) {
+        linksCheckerModule.handle(message);
+        pageInfoModule.handle(message);
+    });
+
+    pageInfoModule.handle({ name: 'init' });
+})();
+
+/***/ }),
+
+/***/ 60:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _LinksChecker = __webpack_require__(24);
+
+var _LinksChecker2 = _interopRequireDefault(_LinksChecker);
+
+__webpack_require__(61);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ContentModule = function () {
+    function ContentModule() {
+        _classCallCheck(this, ContentModule);
+
+        this.linksChecker = new _LinksChecker2.default();
+        this.linksChecker.init();
+    }
+
+    _createClass(ContentModule, [{
+        key: 'getLinks',
+        value: function getLinks() {
+            this.linksChecker.getLinks();
+        }
+    }, {
+        key: 'handle',
+        value: function handle(message) {
+            switch (message.name) {
+                case 'checkLinks':
+                    this.linksChecker.checkLinks(true);
+                    console.log('Start checking links.');
+                    break;
+                case 'checkingLinksCallback':
+                    this.linksChecker.checkLinksCallback(message);
+                    break;
+                case 'stopCheckLinks':
+                    this.linksChecker.stopCheckLinks();
+                    break;
+                case 'rescanTimeoutLinks':
+                    this.linksChecker.rescanTimeoutLinks();
+                    break;
+            }
+        }
+    }]);
+
+    return ContentModule;
+}();
+
+exports.default = ContentModule;
+
+/***/ }),
+
+/***/ 61:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 62:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _PageInfoProvider = __webpack_require__(63);
+
+var _PageInfoProvider2 = _interopRequireDefault(_PageInfoProvider);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PageInfoModule = function () {
+    function PageInfoModule() {
+        _classCallCheck(this, PageInfoModule);
+
+        this.pageInfoProvider = new _PageInfoProvider2.default();
+    }
+
+    _createClass(PageInfoModule, [{
+        key: 'handle',
+        value: function handle(message) {
+            switch (message.name) {
+                case 'init':
+                case 'getPageInfo':
+                    chrome.runtime.sendMessage({
+                        name: 'pageInfo',
+                        pageInfo: this.pageInfoProvider.getInfo(),
+                        cookies: this.pageInfoProvider.getCookies(),
+                        metaTags: this.pageInfoProvider.getMetaTags()
+                    });
+                    break;
+            }
+        }
+    }]);
+
+    return PageInfoModule;
+}();
+
+exports.default = PageInfoModule;
+
+/***/ }),
+
+/***/ 63:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var PageInfoProvider = function () {
+    function PageInfoProvider() {
+        _classCallCheck(this, PageInfoProvider);
+    }
+
+    _createClass(PageInfoProvider, [{
+        key: 'getInfo',
+
+
+        //common info about page
+        value: function getInfo() {
+            var pageInfo = {};
+            pageInfo.https = location.protocol === 'https:';
+            pageInfo.title = document.title;
+            pageInfo.host = location.hostname;
+            pageInfo.path = location.pathname;
+            pageInfo.query_string = location.search;
+            pageInfo.url = location.href;
+
+            return pageInfo;
+        }
+    }, {
+        key: 'getCookies',
+
+
+        //cookies
+        value: function getCookies() {
+            return document.cookie;
+        }
+    }, {
+        key: 'getMetaTags',
+
+
+        //array of page's meta tags
+        value: function getMetaTags() {
+            var metaTags = [];
+            Array.from(document.getElementsByTagName('meta')).forEach(function (element) {
+                metaTags.push(element.outerHTML);
+            });
+
+            return metaTags;
+        }
+    }]);
+
+    return PageInfoProvider;
+}();
+
+exports.default = PageInfoProvider;
 
 /***/ })
 

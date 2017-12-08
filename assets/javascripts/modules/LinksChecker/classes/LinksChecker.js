@@ -80,11 +80,6 @@ export default class LinksChecker {
             });
         }
 
-        chrome.runtime.sendMessage({
-            name: 'linksCount',
-            count: this.linksList.length,
-        });
-
         let link = this.linksList[this.checkerIndex];
         if (link) {
             link.domNode.classList.add('checker-progress');

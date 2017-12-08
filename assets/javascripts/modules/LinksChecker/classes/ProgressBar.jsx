@@ -11,14 +11,14 @@ export default class ProgressBar extends React.Component {
         let percentError = Math.round(this.props.error / this.props.all * 100) +
             '%';
 
-        return (<div class="progress margin-top">
-            <div class="progress-bar progress-bar-success"
+        return (<div className="progress margin-top">
+            <div className="progress-bar progress-bar-success"
                  style={{width: percentSuccess}}>
             </div>
-            <div class="progress-bar progress-bar-warning"
+            <div className="progress-bar progress-bar-warning"
                  style={{width: percentWarning}}>
             </div>
-            <div class="progress-bar progress-bar-danger"
+            <div className="progress-bar progress-bar-danger"
                  style={{width: percentError}}>
             </div>
         </div>);
