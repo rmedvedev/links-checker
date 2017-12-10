@@ -8,12 +8,14 @@ export default class ContentModule {
         this.linksChecker.init();
     }
 
-    getLinks(){
-        this.linksChecker.getLinks();
-    }
-
     handle(message) {
         switch (message.name) {
+            case 'init':
+                chrome.runtime.sendMessage({
+                    name: 'linksCount',
+                    count: this.linksChecker.getLinks().length,
+                });
+                break;
             case 'checkLinks':
                 this.linksChecker.checkLinks(true);
                 console.log('Start checking links.');

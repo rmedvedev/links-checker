@@ -2,13 +2,28 @@ import React from 'react';
 
 export default class ProgressBar extends React.Component {
     render() {
-        let percentSuccess = Math.round(this.props.success / this.props.all *
+
+        let success = 0;
+        let warning = 0;
+        let error = 0;
+
+        this.props.list.forEach(function(status){
+            if (status >= 200 && status < 300) {
+                success++;
+            } else if (status < 400 && status !== 0) {
+                warning++;
+            } else {
+                error++;
+            }
+        });
+
+        let percentSuccess = Math.round(success / this.props.allcount *
             100) +
             '%';
-        let percentWarning = Math.round(this.props.warning / this.props.all *
+        let percentWarning = Math.round(warning / this.props.allcount *
             100) +
             '%';
-        let percentError = Math.round(this.props.error / this.props.all * 100) +
+        let percentError = Math.round(error / this.props.allcount * 100) +
             '%';
 
         return (<div className="progress margin-top">

@@ -64,6 +64,8 @@ export default class ValidatorPagesModule {
         let files = event.target.files;
         let reader = new FileReader();
 
+        $this.linksList = [];
+
         reader.onload = function (e) {
             let listFile = JSON.parse(e.target.result);
             listFile['pages'].forEach(function (page) {

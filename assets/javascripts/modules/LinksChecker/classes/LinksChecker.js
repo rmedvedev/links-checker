@@ -3,7 +3,8 @@ import OptionsHelper from './../../../common/OptionsHelper.js';
 export default class LinksChecker {
 
     constructor() {
-        this.linksList = null;
+        this.linksList = [];
+        this.linkNodes = new Map();
         this.checkerIndex = null;
         this.optionsHelper = new OptionsHelper;
         this._options = null;
@@ -17,7 +18,9 @@ export default class LinksChecker {
                 name: 'linksCount',
                 count: $this.linksList.length,
             });
-        }).catch((error)=>{console.log(error);});
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     _getOptions() {
@@ -33,7 +36,15 @@ export default class LinksChecker {
 
     _findLinks() {
         let links = [];
+        let $this = this;
         document.querySelectorAll('a').forEach(function(linkNode) {
+            if ($this.linkNodes.has(linkNode.href)) {
+                $this.linkNodes.get(linkNode.href).push(linkNode);
+                return;
+            } else {
+                $this.linkNodes.set(linkNode.href, [linkNode]);
+            }
+
             links.push({
                 domNode: linkNode,
                 status: null,
@@ -59,10 +70,12 @@ export default class LinksChecker {
     }
 
     _clearStyles() {
-        this.linksList.forEach(function(link) {
-            link.domNode.classList.remove('checker-link', 'checker-success',
-                'checker-error', 'checker-progress');
-            link.domNode.classList.add('checker-link');
+        this.linkNodes.forEach(function(nodes) {
+            nodes.forEach(function(node) {
+                node.classList.remove('checker-link', 'checker-success',
+                    'checker-error', 'checker-progress');
+                node.classList.add('checker-link');
+            });
         });
     }
 
@@ -82,7 +95,9 @@ export default class LinksChecker {
 
         let link = this.linksList[this.checkerIndex];
         if (link) {
-            link.domNode.classList.add('checker-progress');
+            this.linkNodes.get(link.domNode.href).forEach(function(node) {
+                node.classList.add('checker-progress');
+            });
             chrome.runtime.sendMessage({
                 name: 'checkLink',
                 link: link.domNode.href,
@@ -101,10 +116,14 @@ export default class LinksChecker {
                 css = 'checker-success';
                 color = '';
             }
-            this.linksList[message.index].domNode.classList.remove(
-                'checker-success',
-                'checker-error', 'checker-progress');
-            this.linksList[message.index].domNode.classList.add(css);
+
+            this.linkNodes.get(this.linksList[message.index].domNode.href).
+                forEach(function(node) {
+                    node.classList.remove(
+                        'checker-success',
+                        'checker-error', 'checker-progress');
+                    node.classList.add(css);
+                });
 
             console.log('%c' + this.linksList[message.index].domNode.href +
                 ' - ' +
