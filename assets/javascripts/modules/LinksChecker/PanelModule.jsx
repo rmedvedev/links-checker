@@ -12,11 +12,6 @@ export default class PanelModule {
         this.linksData = {
             sessionCount: 0,
             count: 0,
-            statuses: {
-                success: 0,
-                warning: 0,
-                error: 0,
-            },
             list: new Map(),
         };
 
@@ -58,10 +53,7 @@ export default class PanelModule {
                                 </button>
                             </div>
                             <ProgressBar
-                                success={this.linksData.statuses.success}
-                                warning={this.linksData.statuses.warning}
-                                error={this.linksData.statuses.error}
-                                all={this.linksData.count}/>
+                                list={this.linksData.list} allcount={this.linksData.count}/>
                             <div>
                                 <strong>Links: </strong>{this.linksData.count}
                             </div>
@@ -114,28 +106,18 @@ export default class PanelModule {
             case 'linksCount':
                 this.linksData.count = message.count;
                 this._resetLinksData();
-                this.render();
                 break;
             case 'checkedLink':
                 this.addLink(message.url, message.status);
                 break;
             case 'getSessionLinksCount':
                 this.linksData.sessionCount = message.count;
-                this.render();
                 break;
         }
         this.render();
     }
 
     addLink(url, status) {
-        if (status >= 200 && status < 300) {
-            this.linksData.statuses.success++;
-        } else if (status < 400 && status !== 0) {
-            this.linksData.statuses.warning++;
-        } else {
-            this.linksData.statuses.error++;
-        }
-
         this.linksData.list.set(url, status);
     }
 
@@ -161,11 +143,6 @@ export default class PanelModule {
     }
 
     _resetLinksData() {
-        this.linksData.statuses = {
-            success: 0,
-            warning: 0,
-            error: 0,
-        };
         this.linksData.list = new Map();
     }
 }
