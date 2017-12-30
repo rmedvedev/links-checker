@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "url": "http://banki.ru"
+    },
+    {
+      "url": "http://google.com"
+    },
+    {
+      "url": "http://yandex.ru"
+    }
+  ]
+}
