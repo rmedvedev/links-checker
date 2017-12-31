@@ -22,11 +22,13 @@ export default class BackgroundModule {
                 this.enableSession = false;
                 this.sessionLinks = [];
                 break;
-
-            case 'getSessionLinksCount':
+            case 'getCommonInfo':
                 connections[message.tabId].postMessage({
-                    name: 'getSessionLinksCount',
-                    count: Object.keys(this.sessionLinks).length,
+                    name: 'getCommonInfo',
+                    data: {
+                        sessionLinksCount: Object.keys(this.sessionLinks).length,
+                        enableSession: this.enableSession,
+                    },
                 });
                 break;
         }
@@ -62,8 +64,7 @@ export default class BackgroundModule {
                 break;
         }
 
-        function resultCallback(requestTime, httpStatus)
-        {
+        function resultCallback(requestTime, httpStatus) {
             chrome.tabs.sendMessage(sender.tab.id, {
                 name: 'checkingLinksCallback',
                 status: httpStatus,

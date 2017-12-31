@@ -459,11 +459,13 @@ var BackgroundModule = function () {
                     this.enableSession = false;
                     this.sessionLinks = [];
                     break;
-
-                case 'getSessionLinksCount':
+                case 'getCommonInfo':
                     connections[message.tabId].postMessage({
-                        name: 'getSessionLinksCount',
-                        count: Object.keys(this.sessionLinks).length
+                        name: 'getCommonInfo',
+                        data: {
+                            sessionLinksCount: Object.keys(this.sessionLinks).length,
+                            enableSession: this.enableSession
+                        }
                     });
                     break;
             }

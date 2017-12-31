@@ -26,7 +26,7 @@ export default class PanelModule {
         this._resetLinksData = this._resetLinksData.bind(this);
 
         setInterval(() => {
-            this.getSessionLinksCount();
+            this.getCommonInfo();
         }, 1000);
     }
 
@@ -62,7 +62,7 @@ export default class PanelModule {
                         </div>
                         <div className="col-xs-2">
                             <label className="checkbox-inline">
-                                <input type="checkbox" name="session"
+                                <input type="checkbox" name="session" checked={this._sessionState}
                                        onChange={this._sessionChange}/>Session
                             </label>
                             <div className="margin-top">
@@ -110,8 +110,9 @@ export default class PanelModule {
             case 'checkedLink':
                 this.addLink(message.url, message.status);
                 break;
-            case 'getSessionLinksCount':
-                this.linksData.sessionCount = message.count;
+            case 'getCommonInfo':
+                this.linksData.sessionCount = message.data.sessionLinksCount;
+                this._sessionState = message.data.enableSession;
                 break;
         }
         this.render();
@@ -121,16 +122,16 @@ export default class PanelModule {
         this.linksData.list.set(url, status);
     }
 
-    getSessionLinksCount() {
+    getCommonInfo() {
         this.connection.postMessage({
-            name: 'getSessionLinksCount',
+            name: 'getCommonInfo',
             tabId: this.tabId,
         });
     }
 
     _sessionChange(event) {
-        this._sessionState = !!event.target.checked;
-
+        this._sessionState = event.target.checked;
+        this.render();
         let messageName = 'stopSession';
         if (this._sessionState) {
             messageName = 'startSession';
