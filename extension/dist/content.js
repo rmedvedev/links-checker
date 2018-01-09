@@ -369,15 +369,21 @@ var _ContentModule3 = __webpack_require__(62);
 
 var _ContentModule4 = _interopRequireDefault(_ContentModule3);
 
+var _ContentModule5 = __webpack_require__(64);
+
+var _ContentModule6 = _interopRequireDefault(_ContentModule5);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function () {
     var linksCheckerModule = new _ContentModule2.default();
     var pageInfoModule = new _ContentModule4.default();
+    var validatorPageModule = new _ContentModule6.default();
 
     chrome.runtime.onMessage.addListener(function (message) {
         linksCheckerModule.handle(message);
         pageInfoModule.handle(message);
+        validatorPageModule.handle(message);
     });
 
     pageInfoModule.handle({ name: 'init' });
@@ -569,6 +575,69 @@ var PageInfoProvider = function () {
 }();
 
 exports.default = PageInfoProvider;
+
+/***/ }),
+
+/***/ 64:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ValidatorPagesModule = function () {
+    function ValidatorPagesModule() {
+        _classCallCheck(this, ValidatorPagesModule);
+
+        this._duplicatedPage = false;
+    }
+
+    _createClass(ValidatorPagesModule, [{
+        key: 'handle',
+        value: function handle(message) {
+            switch (message.name) {
+                case 'getPageInfo':
+                    chrome.runtime.sendMessage({
+                        name: 'pageInfo'
+                    });
+                    break;
+                case 'duplicatePage':
+                    this._duplicatedPage = message.status;
+                    if (this._duplicatedPage) {
+                        window.addEventListener('click', this._clickListener);
+                    } else {
+                        window.removeEventListener('click', this._clickListener);
+                    }
+                    break;
+                case 'click':
+
+                    break;
+            }
+        }
+    }, {
+        key: '_clickListener',
+        value: function _clickListener(event) {
+            chrome.runtime.sendMessage({
+                name: 'click',
+                coordinates: {
+                    x: event.screenX,
+                    y: event.screenY
+                }
+            });
+        }
+    }]);
+
+    return ValidatorPagesModule;
+}();
+
+exports.default = ValidatorPagesModule;
 
 /***/ })
 
