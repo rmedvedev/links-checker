@@ -8,6 +8,27 @@ export default class ValidatorPagesModule {
         switch (message.name) {
             case 'pageInfo':
                 break;
+            case 'getDuplicatePage':
+                if (this.duplicatedTabs.indexOf(sender.tab.id) !== -1) {
+                    chrome.tabs.sendMessage(sender.tab.id, {name: 'duplicate_page', status: true});
+                }
+                break;
+            case 'click':
+                this.duplicatedTabs.forEach(function(tabId){
+                    if(sender.tab.id === tabId){
+                        return;
+                    }
+                    chrome.tabs.sendMessage(tabId, message);
+                });
+                break;
+            case 'scroll':
+                this.duplicatedTabs.forEach(function(tabId){
+                    if(sender.tab.id === tabId){
+                        return;
+                    }
+                    chrome.tabs.sendMessage(tabId, message);
+                });
+                break;
         }
     }
 
