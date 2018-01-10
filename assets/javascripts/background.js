@@ -1,14 +1,17 @@
 import {default as LinksCheckerModule} from './modules/LinksChecker/BackgroundModule.js';
 import {default as PageInfoModule} from './modules/PageInfo/BackgroundModule.js';
+import {default as ValidatorPages} from './modules/ValidatorPages/BackgroundModule.js';
 
 let linksCheckerModule = new LinksCheckerModule();
 let pageInfoModule = new PageInfoModule();
+let validatorModule = new ValidatorPages();
 
 (function() {
     let connections = {};
     chrome.runtime.onConnect.addListener(function(port) {
         let extensionListener = function(message, sender, sendResponse) {
             linksCheckerModule.handlePanelMessage(message, connections);
+            validatorModule.handlePanelMessage(message, connections);
 
             switch (message.name) {
                 case 'init':
@@ -39,6 +42,8 @@ let pageInfoModule = new PageInfoModule();
             linksCheckerModule.handleContentMessage(message, sender,
                 connections);
             pageInfoModule.handleContentMessage(message, sender,
+                connections);
+            validatorModule.handleContentMessage(message, sender,
                 connections);
 
             return true;
