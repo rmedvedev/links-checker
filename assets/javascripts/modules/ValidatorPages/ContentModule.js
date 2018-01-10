@@ -18,20 +18,21 @@ export default class ValidatorPagesModule {
                 this._duplicatedPage = message.status;
                 if (this._duplicatedPage) {
                     window.addEventListener('click', this._clickListener);
-                    window.addEventListener('wheel', this._scrollListener);
+                    window.addEventListener('scroll', this._scrollListener);
                 } else {
                     window.removeEventListener('click', this._clickListener);
-                    window.removeEventListener('wheel', this._scrollListener);
+                    window.removeEventListener('scroll', this._scrollListener);
                 }
                 break;
             case 'click':
-                console.log('to', message);
-                let element = document.elementFromPoint(message.coordinates.x, message.coordinates.y);
+                let element = document.elementFromPoint(message.coordinates.x,
+                    message.coordinates.y);
                 element.dispatchEvent(new MouseEvent('click', {bubbles: true}));
                 break;
             case 'scroll':
-                console.log('toScroll', message);
-                window.dispatchEvent(new WheelEvent('wheel', {bubbles: true, deltaX: message.deltaX, deltaY: message.deltaY}));
+                window.removeEventListener('scroll', this._scrollListener);
+                window.scrollTo(message.offsetX, message.offsetY);
+                window.addEventListener('scroll', this._scrollListener);
                 break;
 
         }
@@ -46,22 +47,20 @@ export default class ValidatorPagesModule {
             name: 'click',
             coordinates: {
                 x: event.clientX,
-                y: event.clientY
+                y: event.clientY,
             },
         });
     }
 
-    _scrollListener(event){
-        console.log(event);
-
+    _scrollListener(event) {
         if (!event.isTrusted) {
             return;
         }
 
         chrome.runtime.sendMessage({
             name: 'scroll',
-            deltaX: event.deltaX,
-            deltaY: event.deltaY
+            offsetX: window.pageXOffset,
+            offsetY: window.pageYOffset,
         });
     }
 }
