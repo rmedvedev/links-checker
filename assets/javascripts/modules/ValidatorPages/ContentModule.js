@@ -5,6 +5,14 @@ export default class ValidatorPagesModule {
         chrome.runtime.sendMessage({
             name: 'getDuplicatePage',
         });
+        this.isOnPage = false;
+        window.onmouseover = function(){
+            this.isOnPage = true;
+        };
+
+        window.onmouseout = function(){
+            this.isOnPage = false;
+        };
     }
 
     handle(message) {
@@ -30,9 +38,7 @@ export default class ValidatorPagesModule {
                 element.dispatchEvent(new MouseEvent('click', {bubbles: true}));
                 break;
             case 'scroll':
-                window.removeEventListener('scroll', this._scrollListener);
                 window.scrollTo(message.offsetX, message.offsetY);
-                window.addEventListener('scroll', this._scrollListener);
                 break;
 
         }
@@ -53,7 +59,7 @@ export default class ValidatorPagesModule {
     }
 
     _scrollListener(event) {
-        if (!event.isTrusted) {
+        if (!event.isTrusted || !this.isOnPage) {
             return;
         }
 
