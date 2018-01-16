@@ -600,6 +600,14 @@ var ValidatorPagesModule = function () {
         chrome.runtime.sendMessage({
             name: 'getDuplicatePage'
         });
+        this.isOnPage = false;
+        window.onmouseover = function () {
+            this.isOnPage = true;
+        };
+
+        window.onmouseout = function () {
+            this.isOnPage = false;
+        };
     }
 
     _createClass(ValidatorPagesModule, [{
@@ -615,20 +623,18 @@ var ValidatorPagesModule = function () {
                     this._duplicatedPage = message.status;
                     if (this._duplicatedPage) {
                         window.addEventListener('click', this._clickListener);
-                        window.addEventListener('wheel', this._scrollListener);
+                        window.addEventListener('scroll', this._scrollListener);
                     } else {
                         window.removeEventListener('click', this._clickListener);
-                        window.removeEventListener('wheel', this._scrollListener);
+                        window.removeEventListener('scroll', this._scrollListener);
                     }
                     break;
                 case 'click':
-                    console.log('to', message);
                     var element = document.elementFromPoint(message.coordinates.x, message.coordinates.y);
                     element.dispatchEvent(new MouseEvent('click', { bubbles: true }));
                     break;
                 case 'scroll':
-                    console.log('toScroll', message);
-                    window.dispatchEvent(new WheelEvent('wheel', { bubbles: true, deltaX: message.deltaX, deltaY: message.deltaY }));
+                    window.scrollTo(message.offsetX, message.offsetY);
                     break;
 
             }
@@ -651,16 +657,14 @@ var ValidatorPagesModule = function () {
     }, {
         key: '_scrollListener',
         value: function _scrollListener(event) {
-            console.log(event);
-
-            if (!event.isTrusted) {
+            if (!event.isTrusted || !this.isOnPage) {
                 return;
             }
 
             chrome.runtime.sendMessage({
                 name: 'scroll',
-                deltaX: event.deltaX,
-                deltaY: event.deltaY
+                offsetX: window.pageXOffset,
+                offsetY: window.pageYOffset
             });
         }
     }]);
