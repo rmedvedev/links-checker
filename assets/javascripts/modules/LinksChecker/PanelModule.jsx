@@ -61,10 +61,9 @@ export default class PanelModule {
                             <LinksReport list={this.linksData.list}/>
                         </div>
                         <div className="col-xs-2">
-                            <label className="checkbox-inline">
-                                <input type="checkbox" name="session" checked={this._sessionState}
-                                       onChange={this._sessionChange}/>Session
-                            </label>
+                                <input type="checkbox" className="checkbox" name="session" id="session" checked={this._sessionState}
+                                       onChange={this._sessionChange}/>
+                                <label htmlFor="session">Session</label>
                             <div className="margin-top">
                                 <strong>Saved
                                     links: </strong>{this.linksData.sessionCount}

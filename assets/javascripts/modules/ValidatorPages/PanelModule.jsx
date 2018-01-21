@@ -44,11 +44,12 @@ export default class ValidatorPagesModule {
                     <br/>
                     <br/>
                     <div>
-                        <label className="checkbox-inline">
-                            <input type="checkbox" name="duplicatedPage" checked={this._duplicatedPage}
-                                   onChange={this.duplicatePage}/> Duplicated Page
-                        </label> <i className="glyphicon glyphicon-info-sign text-muted font11"
-                                    title="The link will be translated to other tabs where this option is enabled"></i>
+                        <input type="checkbox" name="duplicatedPage" className="checkbox" id='duplicatedPage'
+                               checked={this._duplicatedPage}
+                               onChange={this.duplicatePage}/>
+                        <label htmlFor="duplicatedPage">Duplicated Page <i
+                            className="glyphicon glyphicon-info-sign text-muted font11"
+                            title="The link will be translated to other tabs where this option is enabled"></i></label>
                     </div>
                 </div>
                 <div className="col-xs-3">
