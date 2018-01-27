@@ -146,6 +146,3 @@ export default class PanelModule {
         this.linksData.list = new Map();
     }
 }
-
-
-
