@@ -12,7 +12,7 @@ export default class LinksChecker {
 
     init() {
         let $this = this;
-        this._getOptions().then(function() {
+        this._getOptions().then(function () {
             $this.linksList = $this._filterLinks($this._findLinks());
             chrome.runtime.sendMessage({
                 name: 'linksCount',
@@ -21,6 +21,8 @@ export default class LinksChecker {
         }).catch((error) => {
             console.log(error);
         });
+
+        setInterval($this._refreshLinks, 10000);
     }
 
     _getOptions() {
@@ -59,6 +61,34 @@ export default class LinksChecker {
         });
 
         return links;
+    }
+
+    _refreshLinks(){
+        document.querySelectorAll('a').forEach(function(linkNode) {
+            if ($this.linkNodes.has(linkNode.href)) {
+                $this.linkNodes.get(linkNode.href).push(linkNode);
+                return;
+            } else {
+                $this.linkNodes.set(linkNode.href, [linkNode]);
+            }
+
+            links.push({
+                domNode: linkNode,
+                status: null,
+                parsed_url: {
+                    protocol: linkNode.protocol,
+                    hostname: linkNode.hostname,
+                    pathname: linkNode.pathname,
+                    hash: linkNode.hash,
+                    search: linkNode.search,
+                },
+            });
+        });
+
+        chrome.runtime.sendMessage({
+            name: 'linksCount',
+            count: $this.linksList.length,
+        });
     }
 
     _filterLinks(links) {
