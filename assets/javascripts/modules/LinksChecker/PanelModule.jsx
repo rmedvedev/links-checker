@@ -61,9 +61,10 @@ export default class PanelModule {
                             <LinksReport list={this.linksData.list}/>
                         </div>
                         <div className="col-xs-2">
-                                <input type="checkbox" className="checkbox" name="session" id="session" checked={this._sessionState}
-                                       onChange={this._sessionChange}/>
-                                <label htmlFor="session">Session</label>
+                            <input type="checkbox" className="checkbox" name="session" id="session"
+                                   checked={this._sessionState}
+                                   onChange={this._sessionChange}/>
+                            <label htmlFor="session">Session</label>
                             <div className="margin-top">
                                 <strong>Saved
                                     links: </strong>{this.linksData.sessionCount}
@@ -105,6 +106,9 @@ export default class PanelModule {
             case 'linksCount':
                 this.linksData.count = message.count;
                 this._resetLinksData();
+                break;
+            case 'refreshLinksCount':
+                this.linksData.count = message.count;
                 break;
             case 'checkedLink':
                 this.addLink(message.url, message.status);

@@ -109,6 +109,10 @@ var LinksChecker = function () {
             }).catch(function (error) {
                 console.log(error);
             });
+
+            setInterval(function () {
+                $this._refreshLinks();
+            }, 10000);
         }
     }, {
         key: '_getOptions',
@@ -150,6 +154,43 @@ var LinksChecker = function () {
             });
 
             return links;
+        }
+    }, {
+        key: '_refreshLinks',
+        value: function _refreshLinks() {
+            var $this = this;
+            document.querySelectorAll('a').forEach(function (linkNode) {
+                if ($this.linkNodes.has(linkNode.href)) {
+                    //определяем есть ли уже такая node
+                    var nodes = $this.linkNodes.get(linkNode.href);
+                    for (var i in nodes) {
+                        if (nodes[i] !== linkNode) {
+                            $this.linkNodes.get(linkNode.href).push(linkNode);
+                            return;
+                        }
+                    }
+                    return;
+                } else {
+                    $this.linkNodes.set(linkNode.href, [linkNode]);
+                }
+
+                $this.linksList.push({
+                    domNode: linkNode,
+                    status: null,
+                    parsed_url: {
+                        protocol: linkNode.protocol,
+                        hostname: linkNode.hostname,
+                        pathname: linkNode.pathname,
+                        hash: linkNode.hash,
+                        search: linkNode.search
+                    }
+                });
+            });
+
+            chrome.runtime.sendMessage({
+                name: 'refreshLinksCount',
+                count: $this.linksList.length
+            });
         }
     }, {
         key: '_filterLinks',
@@ -483,6 +524,7 @@ var BackgroundModule = function () {
             var $this = this;
             switch (message.name) {
                 case 'linksCount':
+                case 'refreshLinksCount':
                     connections[sender.tab.id].postMessage(message);
                     break;
                 case 'checkLink':
