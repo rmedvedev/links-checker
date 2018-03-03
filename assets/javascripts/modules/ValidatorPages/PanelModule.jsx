@@ -22,7 +22,7 @@ export default class ValidatorPagesModule {
     render() {
         ReactDOM.render(
             <div className="row margin-top-small">
-                <div className="col-xs-3">
+                <div className="col-md-3 col-xs-12">
                     <form>
                         <div className="form-group">
                             <label htmlFor="links_file">Load config</label>
@@ -52,9 +52,14 @@ export default class ValidatorPagesModule {
                             title="The link will be translated to other tabs where this option is enabled"></i></label>
                     </div>
                 </div>
-                <div className="col-xs-3">
-                    <h5><strong>Count of links:</strong> {this.linksList.length}</h5>
-                    <LinksList links={this.linksList}/>
+                <div className="col-md-3 col-xs-12">
+                    <div className="panel panel-default margin-top-small">
+                        <div className="panel-heading">Links: <div className="pull-right"><span
+                            className="label label-primary">{this.linksList.length}</span></div></div>
+                        <div className="panel-body">
+                            <LinksList links={this.linksList}/>
+                        </div>
+                    </div>
                 </div>
             </div>
             ,

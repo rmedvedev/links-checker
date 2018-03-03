@@ -33,10 +33,10 @@ export default class PanelModule {
     render() {
         ReactDOM.render(
             <div className="panel panel-default margin-top-small">
-                <div className="panel-heading">Links checker</div>
-                <div className="panel-body">
+                    <div className="panel-heading">Links checker</div>
+                    <div className="panel-body">
                     <div className="row">
-                        <div className="col-xs-5">
+                        <div className="col-md-5 col-xs-12">
                             <div className="btn-group" role="group">
                                 <button className="btn btn-success"
                                         onClick={this._scan}
@@ -59,8 +59,9 @@ export default class PanelModule {
                             </div>
 
                             <LinksReport list={this.linksData.list}/>
+                            <br/>
                         </div>
-                        <div className="col-xs-2">
+                        <div className="col-md-2 col-xs-12">
                             <input type="checkbox" className="checkbox" name="session" id="session"
                                    checked={this._sessionState}
                                    onChange={this._sessionChange}/>

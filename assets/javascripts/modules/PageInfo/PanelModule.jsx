@@ -17,7 +17,7 @@ export default class PanelModule {
     render() {
         ReactDOM.render(
             <div className="row margin-top-small">
-                <div className="col-xs-6">
+                <div className="col-md-6 col-xs-12">
                     <div className="panel panel-primary">
                         <div className="panel-heading" role="tab"
                              id="pageInfo">
@@ -74,14 +74,14 @@ export default class PanelModule {
                             <h5 className="panel-title">
                                 <a role="button" data-toggle="collapse"
                                    href="#metatagsPanel"
-                                   aria-expanded="false"
+                                   aria-expanded="true"
                                    aria-controls="metatagsPanel">
                                     Meta tags
                                 </a>
                             </h5>
                         </div>
                         <div id="metatagsPanel"
-                             className="panel-collapse collapse"
+                             className="panel-collapse collapse in"
                              role="tabpanel" aria-labelledby="metaTags">
                             <div className="panel-body">
                             <span id="meta_tags">
@@ -93,7 +93,7 @@ export default class PanelModule {
                         </div>
                     </div>
                 </div>
-                <div className="col-xs-6">
+                <div className="col-md-6 col-xs-12">
                     <div className="panel panel-primary">
                         <div className="panel-heading" role="tab"
                              id="cookiesInfo">

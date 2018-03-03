@@ -26,7 +26,7 @@ export default class LinksReport extends React.Component {
 
         return (<div>
             <ul className="nav nav-pills" role="tablist">{tabs}</ul>
-            <div className="tab-content">{tabsContent}</div>
+            <div className="tab-content links-list">{tabsContent}</div>
         </div>);
     }
 }
