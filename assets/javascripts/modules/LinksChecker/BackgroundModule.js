@@ -38,6 +38,7 @@ export default class BackgroundModule {
         let $this = this;
         switch (message.name) {
             case 'linksCount':
+            case 'refreshLinksCount':
                 connections[sender.tab.id].postMessage(message);
                 break;
             case 'checkLink':
@@ -49,7 +50,7 @@ export default class BackgroundModule {
                         resultLink.httpStatus);
                 } else {
                     $this.linksChecker.checkOne(message.link,
-                        function(httpStatus, requestTime) {
+                        function (httpStatus, requestTime) {
                             if ($this.enableSession) {
                                 $this.sessionLinks[message.link] = {
                                     requestTime: requestTime,

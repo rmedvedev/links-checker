@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 55);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -109,6 +109,10 @@ var LinksChecker = function () {
             }).catch(function (error) {
                 console.log(error);
             });
+
+            setInterval(function () {
+                $this._refreshLinks();
+            }, 10000);
         }
     }, {
         key: '_getOptions',
@@ -150,6 +154,43 @@ var LinksChecker = function () {
             });
 
             return links;
+        }
+    }, {
+        key: '_refreshLinks',
+        value: function _refreshLinks() {
+            var $this = this;
+            document.querySelectorAll('a').forEach(function (linkNode) {
+                if ($this.linkNodes.has(linkNode.href)) {
+                    //определяем есть ли уже такая node
+                    var nodes = $this.linkNodes.get(linkNode.href);
+                    for (var i in nodes) {
+                        if (nodes[i] !== linkNode) {
+                            $this.linkNodes.get(linkNode.href).push(linkNode);
+                            return;
+                        }
+                    }
+                    return;
+                } else {
+                    $this.linkNodes.set(linkNode.href, [linkNode]);
+                }
+
+                $this.linksList.push({
+                    domNode: linkNode,
+                    status: null,
+                    parsed_url: {
+                        protocol: linkNode.protocol,
+                        hostname: linkNode.hostname,
+                        pathname: linkNode.pathname,
+                        hash: linkNode.hash,
+                        search: linkNode.search
+                    }
+                });
+            });
+
+            chrome.runtime.sendMessage({
+                name: 'refreshLinksCount',
+                count: $this.linksList.length
+            });
         }
     }, {
         key: '_filterLinks',
@@ -347,29 +388,29 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(56);
 
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _BackgroundModule = __webpack_require__(56);
+var _BackgroundModule = __webpack_require__(57);
 
 var _BackgroundModule2 = _interopRequireDefault(_BackgroundModule);
 
-var _BackgroundModule3 = __webpack_require__(57);
+var _BackgroundModule3 = __webpack_require__(58);
 
 var _BackgroundModule4 = _interopRequireDefault(_BackgroundModule3);
 
-var _BackgroundModule5 = __webpack_require__(58);
+var _BackgroundModule5 = __webpack_require__(59);
 
 var _BackgroundModule6 = _interopRequireDefault(_BackgroundModule5);
 
@@ -421,7 +462,7 @@ var validatorModule = new _BackgroundModule6.default();
 
 /***/ }),
 
-/***/ 56:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -483,6 +524,7 @@ var BackgroundModule = function () {
             var $this = this;
             switch (message.name) {
                 case 'linksCount':
+                case 'refreshLinksCount':
                     connections[sender.tab.id].postMessage(message);
                     break;
                 case 'checkLink':
@@ -530,7 +572,7 @@ exports.default = BackgroundModule;
 
 /***/ }),
 
-/***/ 57:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -579,7 +621,7 @@ exports.default = PageInfoModule;
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

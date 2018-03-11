@@ -12,7 +12,7 @@ export default class LinksChecker {
 
     init() {
         let $this = this;
-        this._getOptions().then(function() {
+        this._getOptions().then(function () {
             $this.linksList = $this._filterLinks($this._findLinks());
             chrome.runtime.sendMessage({
                 name: 'linksCount',
@@ -21,11 +21,15 @@ export default class LinksChecker {
         }).catch((error) => {
             console.log(error);
         });
+
+        setInterval(function () {
+            $this._refreshLinks();
+        }, 10000);
     }
 
     _getOptions() {
         let $this = this;
-        return this.optionsHelper.getAll().then(function(options) {
+        return this.optionsHelper.getAll().then(function (options) {
             return $this._options = options;
         });
     }
@@ -37,7 +41,7 @@ export default class LinksChecker {
     _findLinks() {
         let links = [];
         let $this = this;
-        document.querySelectorAll('a').forEach(function(linkNode) {
+        document.querySelectorAll('a').forEach(function (linkNode) {
             if ($this.linkNodes.has(linkNode.href)) {
                 $this.linkNodes.get(linkNode.href).push(linkNode);
                 return;
@@ -61,17 +65,53 @@ export default class LinksChecker {
         return links;
     }
 
+    _refreshLinks() {
+        let $this = this;
+        document.querySelectorAll('a').forEach(function (linkNode) {
+            if ($this.linkNodes.has(linkNode.href)) {
+                //определяем есть ли уже такая node
+                let nodes = $this.linkNodes.get(linkNode.href);
+                for (let i in nodes) {
+                    if (nodes[i] !== linkNode) {
+                        $this.linkNodes.get(linkNode.href).push(linkNode);
+                        return;
+                    }
+                }
+                return;
+            } else {
+                $this.linkNodes.set(linkNode.href, [linkNode]);
+            }
+
+            $this.linksList.push({
+                domNode: linkNode,
+                status: null,
+                parsed_url: {
+                    protocol: linkNode.protocol,
+                    hostname: linkNode.hostname,
+                    pathname: linkNode.pathname,
+                    hash: linkNode.hash,
+                    search: linkNode.search,
+                },
+            });
+        });
+
+        chrome.runtime.sendMessage({
+            name: 'refreshLinksCount',
+            count: $this.linksList.length,
+        });
+    }
+
     _filterLinks(links) {
         let $this = this;
-        return links.filter(function(link) {
+        return links.filter(function (link) {
             return $this._options.links_checker_black_list.indexOf(
                 link.domNode.href) === -1;
         });
     }
 
     _clearStyles() {
-        this.linkNodes.forEach(function(nodes) {
-            nodes.forEach(function(node) {
+        this.linkNodes.forEach(function (nodes) {
+            nodes.forEach(function (node) {
                 node.classList.remove('checker-link', 'checker-success',
                     'checker-error', 'checker-progress');
                 node.classList.add('checker-link');
@@ -88,14 +128,14 @@ export default class LinksChecker {
         if (restart) {
             this.checkerIndex = 0;
             this._clearStyles();
-            this.linksList.map(function(link) {
+            this.linksList.map(function (link) {
                 link.status = null;
             });
         }
 
         let link = this.linksList[this.checkerIndex];
         if (link) {
-            this.linkNodes.get(link.domNode.href).forEach(function(node) {
+            this.linkNodes.get(link.domNode.href).forEach(function (node) {
                 node.classList.add('checker-progress');
             });
             chrome.runtime.sendMessage({
@@ -117,13 +157,12 @@ export default class LinksChecker {
                 color = '';
             }
 
-            this.linkNodes.get(this.linksList[message.index].domNode.href).
-                forEach(function(node) {
-                    node.classList.remove(
-                        'checker-success',
-                        'checker-error', 'checker-progress');
-                    node.classList.add(css);
-                });
+            this.linkNodes.get(this.linksList[message.index].domNode.href).forEach(function (node) {
+                node.classList.remove(
+                    'checker-success',
+                    'checker-error', 'checker-progress');
+                node.classList.add(css);
+            });
 
             console.log('%c' + this.linksList[message.index].domNode.href +
                 ' - ' +
@@ -157,7 +196,7 @@ export default class LinksChecker {
         let xhr = new XMLHttpRequest();
 
         let startTime = (new Date).getTime();
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
                 let requestTime = (new Date).getTime() - startTime;
                 callback(xhr.status, requestTime);
@@ -165,13 +204,13 @@ export default class LinksChecker {
             }
         };
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
             let requestTime = (new Date).getTime() - startTime;
             callback(xhr.status, requestTime);
             xhr.abort();
         };
 
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
             let requestTime = (new Date).getTime() - startTime;
             callback(0, requestTime);
             xhr.abort();
@@ -182,7 +221,7 @@ export default class LinksChecker {
             xhr.open('GET', link);
             xhr.send();
         } else {
-            this.optionsHelper.getAll().then(function(options) {
+            this.optionsHelper.getAll().then(function (options) {
                 xhr.timeout = options.links_checker_timeout;
                 xhr.open('GET', link);
                 xhr.send();

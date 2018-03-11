@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -109,6 +109,10 @@ var LinksChecker = function () {
             }).catch(function (error) {
                 console.log(error);
             });
+
+            setInterval(function () {
+                $this._refreshLinks();
+            }, 10000);
         }
     }, {
         key: '_getOptions',
@@ -150,6 +154,43 @@ var LinksChecker = function () {
             });
 
             return links;
+        }
+    }, {
+        key: '_refreshLinks',
+        value: function _refreshLinks() {
+            var $this = this;
+            document.querySelectorAll('a').forEach(function (linkNode) {
+                if ($this.linkNodes.has(linkNode.href)) {
+                    //определяем есть ли уже такая node
+                    var nodes = $this.linkNodes.get(linkNode.href);
+                    for (var i in nodes) {
+                        if (nodes[i] !== linkNode) {
+                            $this.linkNodes.get(linkNode.href).push(linkNode);
+                            return;
+                        }
+                    }
+                    return;
+                } else {
+                    $this.linkNodes.set(linkNode.href, [linkNode]);
+                }
+
+                $this.linksList.push({
+                    domNode: linkNode,
+                    status: null,
+                    parsed_url: {
+                        protocol: linkNode.protocol,
+                        hostname: linkNode.hostname,
+                        pathname: linkNode.pathname,
+                        hash: linkNode.hash,
+                        search: linkNode.search
+                    }
+                });
+            });
+
+            chrome.runtime.sendMessage({
+                name: 'refreshLinksCount',
+                count: $this.linksList.length
+            });
         }
     }, {
         key: '_filterLinks',
@@ -347,29 +388,29 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 59:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(60);
+module.exports = __webpack_require__(61);
 
 
 /***/ }),
 
-/***/ 60:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _ContentModule = __webpack_require__(61);
+var _ContentModule = __webpack_require__(62);
 
 var _ContentModule2 = _interopRequireDefault(_ContentModule);
 
-var _ContentModule3 = __webpack_require__(63);
+var _ContentModule3 = __webpack_require__(64);
 
 var _ContentModule4 = _interopRequireDefault(_ContentModule3);
 
-var _ContentModule5 = __webpack_require__(65);
+var _ContentModule5 = __webpack_require__(66);
 
 var _ContentModule6 = _interopRequireDefault(_ContentModule5);
 
@@ -391,7 +432,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ 61:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -407,7 +448,7 @@ var _LinksChecker = __webpack_require__(24);
 
 var _LinksChecker2 = _interopRequireDefault(_LinksChecker);
 
-__webpack_require__(62);
+__webpack_require__(63);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -455,14 +496,14 @@ exports.default = ContentModule;
 
 /***/ }),
 
-/***/ 62:
+/***/ 63:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 63:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -474,7 +515,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _PageInfoProvider = __webpack_require__(64);
+var _PageInfoProvider = __webpack_require__(65);
 
 var _PageInfoProvider2 = _interopRequireDefault(_PageInfoProvider);
 
@@ -513,7 +554,7 @@ exports.default = PageInfoModule;
 
 /***/ }),
 
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -578,7 +619,7 @@ exports.default = PageInfoProvider;
 
 /***/ }),
 
-/***/ 65:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

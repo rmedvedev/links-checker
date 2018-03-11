@@ -33,10 +33,10 @@ export default class PanelModule {
     render() {
         ReactDOM.render(
             <div className="panel panel-default margin-top-small">
-                <div className="panel-heading">Links checker</div>
-                <div className="panel-body">
+                    <div className="panel-heading">Links checker</div>
+                    <div className="panel-body">
                     <div className="row">
-                        <div className="col-xs-5">
+                        <div className="col-md-5 col-xs-12">
                             <div className="btn-group" role="group">
                                 <button className="btn btn-success"
                                         onClick={this._scan}
@@ -59,12 +59,13 @@ export default class PanelModule {
                             </div>
 
                             <LinksReport list={this.linksData.list}/>
+                            <br/>
                         </div>
-                        <div className="col-xs-2">
-                            <label className="checkbox-inline">
-                                <input type="checkbox" name="session" checked={this._sessionState}
-                                       onChange={this._sessionChange}/>Session
-                            </label>
+                        <div className="col-md-2 col-xs-12">
+                            <input type="checkbox" className="checkbox" name="session" id="session"
+                                   checked={this._sessionState}
+                                   onChange={this._sessionChange}/>
+                            <label htmlFor="session">Session</label>
                             <div className="margin-top">
                                 <strong>Saved
                                     links: </strong>{this.linksData.sessionCount}
@@ -107,6 +108,9 @@ export default class PanelModule {
                 this.linksData.count = message.count;
                 this._resetLinksData();
                 break;
+            case 'refreshLinksCount':
+                this.linksData.count = message.count;
+                break;
             case 'checkedLink':
                 this.addLink(message.url, message.status);
                 break;
@@ -147,6 +151,3 @@ export default class PanelModule {
         this.linksData.list = new Map();
     }
 }
-
-
-

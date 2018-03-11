@@ -45,7 +45,7 @@ import {default as ValidatorPagesModule} from './modules/ValidatorPages/PanelMod
         function(panel) {
             _panel = panel;
             panel.onShown.addListener(init);
-        },
+        }
     );
 
 })();
