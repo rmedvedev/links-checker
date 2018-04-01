@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Online manual test assistance",
-  "version": "0.1",
+  "version": "0.1.1",
   "description": "Online manual test assistance",
   "icons": {
     "96": "images/icon96.png"
