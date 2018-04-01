@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "OMTA",
+  "name": "Online manual test assistance",
   "version": "0.1",
   "description": "Online manual test assistance",
   "icons": {
