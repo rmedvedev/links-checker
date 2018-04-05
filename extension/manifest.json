@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
   "name": "Online manual test assistance",
-  "version": "0.1.1",
-  "description": "Online manual test assistance",
+  "short_name": "OMTA",
+  "version": "0.1.2",
+  "description": "Set of tools: Links checker, Web page info, Duplicate tabs",
   "icons": {
     "96": "images/icon96.png"
   },
