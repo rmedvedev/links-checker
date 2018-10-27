@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 55);
+/******/ 	return __webpack_require__(__webpack_require__.s = 53);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -77,7 +77,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _OptionsHelper = __webpack_require__(4);
+var _OptionsHelper = __webpack_require__(5);
 
 var _OptionsHelper2 = _interopRequireDefault(_OptionsHelper);
 
@@ -331,7 +331,7 @@ exports.default = LinksChecker;
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -388,29 +388,29 @@ exports.default = OptionsHelper;
 
 /***/ }),
 
-/***/ 55:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(56);
+module.exports = __webpack_require__(54);
 
 
 /***/ }),
 
-/***/ 56:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _BackgroundModule = __webpack_require__(57);
+var _BackgroundModule = __webpack_require__(55);
 
 var _BackgroundModule2 = _interopRequireDefault(_BackgroundModule);
 
-var _BackgroundModule3 = __webpack_require__(58);
+var _BackgroundModule3 = __webpack_require__(56);
 
 var _BackgroundModule4 = _interopRequireDefault(_BackgroundModule3);
 
-var _BackgroundModule5 = __webpack_require__(59);
+var _BackgroundModule5 = __webpack_require__(57);
 
 var _BackgroundModule6 = _interopRequireDefault(_BackgroundModule5);
 
@@ -462,7 +462,7 @@ var validatorModule = new _BackgroundModule6.default();
 
 /***/ }),
 
-/***/ 57:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -572,7 +572,7 @@ exports.default = BackgroundModule;
 
 /***/ }),
 
-/***/ 58:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -621,7 +621,7 @@ exports.default = PageInfoModule;
 
 /***/ }),
 
-/***/ 59:
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
